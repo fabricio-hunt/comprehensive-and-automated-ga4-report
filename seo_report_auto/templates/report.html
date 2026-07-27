@@ -52,7 +52,7 @@
       <div class="section-header">
         <div>
           <h2>Visão Geral</h2>
-          <span class="header-sub">Resumo Executivo</span>
+          <span class="header-sub">Resumo Executivo | {{ payload.meta.nome_mes }} / {{ payload.meta.ano }}</span>
         </div>
         <img src="{{ payload.branding.logo_bemol }}" alt="Bemol" />
       </div>
@@ -66,12 +66,50 @@
       </div>
     </div>
 
+    <!-- Slide 2B: Visão Geral WEB -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Visão Geral &rarr; WEB</h2>
+          <span class="header-sub">Varejo Web | Sem Filtro Orgânico (Total do Site) | {{ payload.meta.nome_mes }} / {{ payload.meta.ano }}</span>
+        </div>
+        <img src="{{ payload.branding.logo_bemol }}" alt="Bemol" />
+      </div>
+
+      <div class="cards-grid-4" style="margin-bottom: 24px;">
+        {% for card in payload.geral.web_cards %}
+        <div class="metric-card">
+          <span class="metric-title">{{ card.title }}</span>
+          <span class="metric-value">{{ card.value }}</span>
+          <div class="metric-comparison">
+             <div>
+                <span>{{ card.yoy.label }}</span>
+                <strong>{{ card.yoy.value }}</strong>
+             </div>
+             <div class="delta {{ card.yoy.class }}">{{ card.yoy.delta }}</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>{{ card.mom.label }}</span>
+                <strong>{{ card.mom.value }}</strong>
+             </div>
+             <div class="delta {{ card.mom.class }}">{{ card.mom.delta }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="note-box" style="margin-top: 20px;">
+        <p><strong>Visão Geral WEB (Sem filtro orgânico):</strong> Apresenta os números totais consolidados do Varejo Web (<code>bemol.com.br</code>) considerando todos os canais de tráfego, servindo como referência de crescimento geral e comparativo para o canal Orgânico.</p>
+      </div>
+    </div>
+
     <!-- Slide 3: Web Performance -->
     <div class="page">
       <div class="section-header">
         <div>
           <h2>Performance Orgânica &rarr; Web</h2>
-          <span class="header-sub">Varejo Web</span>
+          <span class="header-sub">Varejo Web | {{ payload.meta.nome_mes }} / {{ payload.meta.ano }}</span>
         </div>
         <img src="{{ payload.branding.logo_bemol }}" alt="Bemol" />
       </div>
@@ -127,7 +165,7 @@
       <div class="section-header">
         <div>
           <h2>Visibilidade &rarr; Busca</h2>
-          <span class="header-sub">Varejo Web</span>
+          <span class="header-sub">Varejo Web | {{ payload.meta.nome_mes }} / {{ payload.meta.ano }}</span>
         </div>
         <img src="{{ payload.branding.logo_bemol }}" alt="Bemol" />
       </div>
@@ -171,12 +209,50 @@
       </div>
     </div>
 
+    <!-- Slide 4B: Visão Geral Varejo (App Bemol) -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Visão Geral &rarr; Varejo</h2>
+          <span class="header-sub">App Bemol (Varejo) | Sem Filtro Orgânico (Total do Aplicativo) | {{ payload.meta.nome_mes }} / {{ payload.meta.ano }}</span>
+        </div>
+        <img src="{{ payload.branding.logo_bemol }}" alt="Bemol" />
+      </div>
+
+      <div class="cards-grid-4" style="margin-bottom: 24px;">
+        {% for card in payload.geral.app_cards %}
+        <div class="metric-card">
+          <span class="metric-title">{{ card.title }}</span>
+          <span class="metric-value">{{ card.value }}</span>
+          <div class="metric-comparison">
+             <div>
+                <span>{{ card.yoy.label }}</span>
+                <strong>{{ card.yoy.value }}</strong>
+             </div>
+             <div class="delta {{ card.yoy.class }}">{{ card.yoy.delta }}</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>{{ card.mom.label }}</span>
+                <strong>{{ card.mom.value }}</strong>
+             </div>
+             <div class="delta {{ card.mom.class }}">{{ card.mom.delta }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="note-box" style="margin-top: 20px;">
+        <p><strong>Visão Geral Varejo (Sem filtro orgânico):</strong> Indicadores totais consolidados de tráfego e receita do App Bemol em todos os canais de aquisição no período.</p>
+      </div>
+    </div>
+
     <!-- Slide 5: App Bemol -->
     <div class="page">
       <div class="section-header">
         <div>
           <h2>Performance Orgânica &rarr; App</h2>
-          <span class="header-sub">App Bemol</span>
+          <span class="header-sub">App Bemol | {{ payload.meta.nome_mes }} / {{ payload.meta.ano }}</span>
         </div>
         <img src="{{ payload.branding.logo_bemol }}" alt="Bemol" />
       </div>
@@ -225,12 +301,50 @@
       </div>
     </div>
 
+    <!-- Slide 5B: Visão Geral Bemol Farma -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Visão Geral &rarr; Bemol Farma</h2>
+          <span class="header-sub">Bemol Farma | Sem Filtro Orgânico (Total do Site) | {{ payload.meta.nome_mes }} / {{ payload.meta.ano }}</span>
+        </div>
+        <img src="{{ payload.branding.logo_farma }}" alt="Farma" />
+      </div>
+
+      <div class="cards-grid-4" style="margin-bottom: 24px;">
+        {% for card in payload.geral.farma_cards %}
+        <div class="metric-card">
+          <span class="metric-title">{{ card.title }}</span>
+          <span class="metric-value">{{ card.value }}</span>
+          <div class="metric-comparison">
+             <div>
+                <span>{{ card.yoy.label }}</span>
+                <strong>{{ card.yoy.value }}</strong>
+             </div>
+             <div class="delta {{ card.yoy.class }}">{{ card.yoy.delta }}</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>{{ card.mom.label }}</span>
+                <strong>{{ card.mom.value }}</strong>
+             </div>
+             <div class="delta {{ card.mom.class }}">{{ card.mom.delta }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="note-box" style="margin-top: 20px;">
+        <p><strong>Visão Geral Bemol Farma (Sem filtro orgânico):</strong> Volume total de sessões, usuários ativos e receita de todos os canais de tráfego no e-commerce da Bemol Farma.</p>
+      </div>
+    </div>
+
     <!-- Slide 6: Farma -->
     <div class="page">
       <div class="section-header">
         <div>
           <h2>Performance Orgânica &rarr; Farma</h2>
-          <span class="header-sub">Bemol Farma</span>
+          <span class="header-sub">Bemol Farma | {{ payload.meta.nome_mes }} / {{ payload.meta.ano }}</span>
         </div>
         <img src="{{ payload.branding.logo_farma }}" alt="Farma" />
       </div>
@@ -283,7 +397,7 @@
       <div class="section-header">
         <div>
           <h2>Relatório SEO Concluído</h2>
-          <span class="header-sub">Obrigado</span>
+          <span class="header-sub">Obrigado | {{ payload.meta.nome_mes }} / {{ payload.meta.ano }}</span>
         </div>
       </div>
       <div style="text-align: center; margin-top: 50mm; color: #9CA3AF;">

@@ -80,8 +80,8 @@ def gerar_indice_html(output_dir: Path) -> str:
         <a href="{f.name}" class="report-card">
           <div class="card-icon">📊</div>
           <div class="card-info">
-            <h3>Relatório SEO</h3>
-            <p>{nome_exibicao}</p>
+            <h3>Relatório SEO | {nome_exibicao}</h3>
+            <p>Acessar relatório completo</p>
           </div>
           <div class="card-arrow">→</div>
         </a>
