@@ -212,6 +212,7 @@ def montar_payload_relatorio(contexto: ReportContext, dados_brutos: dict[str, An
             "mes": contexto.mes,
             "ano": ano,
             "mes_nome": mes_nome,
+            "nome_mes": mes_nome,
             "mes_abrev": mes_abrev,
             "titulo": f"Relatório SEO & Search - {mes_nome} / {ano}",
             "subtitle": "Bemol Varejo · Bemol Farma · App Bemol",
