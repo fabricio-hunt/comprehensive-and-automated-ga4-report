@@ -16,7 +16,7 @@ from pathlib import Path
 # ── Paleta Bemol ──────────────────────────────────────────────────────────────
 AZUL = "#1565C0"
 AZUL_CLARO = "#42A5F5"
-CINZA = "#BDBDBD"
+CINZA = "#64748B"
 CINZA_ESCURO = "#757575"
 VERDE = "#4CAF50"
 VERMELHO = "#F44336"

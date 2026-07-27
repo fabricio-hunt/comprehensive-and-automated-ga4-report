@@ -3,7 +3,7 @@
 
   const blue = '#1E6FEB';
   const blueSoft = '#7fb8ff';
-  const gray = '#D1D5DB';
+  const gray = '#64748B';
   const text = '#374151';
   const muted = '#9CA3AF';
   const grid = '#EDF2F7';
@@ -34,7 +34,7 @@
     textStyle: { fontFamily: 'Inter', color: text },
     color: [gray, blue],
     tooltip: { trigger: 'axis' },
-    legend: { bottom: 0 },
+    legend: { bottom: 0, icon: 'roundRect', itemWidth: 16, itemHeight: 8, textStyle: { color: '#1E293B', fontSize: 13, fontWeight: 'bold' } },
     grid: { left: 40, right: 20, top: 20, bottom: 40 },
     xAxis: { type: 'category', data: labels12, axisLine: { lineStyle: { color: grid } } },
     yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } } },
@@ -56,10 +56,10 @@
     legend: {
       top: 0,
       left: 0,
-      icon: 'line',
-      itemWidth: 18,
-      itemHeight: 2,
-      textStyle: { color: muted, fontSize: 11 }
+      icon: 'roundRect',
+      itemWidth: 16,
+      itemHeight: 8,
+      textStyle: { color: '#1E293B', fontSize: 13, fontWeight: 'bold' }
     },
     grid: { left: 56, right: 18, top: 34, bottom: 34 },
     xAxis: {
@@ -140,7 +140,7 @@
     textStyle: { fontFamily: 'Inter', color: text },
     color: [blue, gray],
     tooltip: { trigger: 'axis' },
-    legend: { bottom: 0 },
+    legend: { bottom: 0, icon: 'roundRect', itemWidth: 16, itemHeight: 8, textStyle: { color: '#1E293B', fontSize: 13, fontWeight: 'bold' } },
     grid: { left: 48, right: 16, top: 16, bottom: 40 },
     xAxis: { type: 'category', data: charts.index_labels || [] },
     yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } } },
@@ -172,10 +172,10 @@
     legend: {
       top: 0,
       left: 0,
-      icon: 'line',
-      itemWidth: 18,
-      itemHeight: 2,
-      textStyle: { color: muted, fontSize: 11 }
+      icon: 'roundRect',
+      itemWidth: 16,
+      itemHeight: 8,
+      textStyle: { color: '#1E293B', fontSize: 13, fontWeight: 'bold' }
     },
     grid: { left: 56, right: 16, top: 34, bottom: 34 },
     xAxis: {
