@@ -1,0 +1,26 @@
+{
+  "credencial_oauth": "client_secret.json",
+
+  "ga4": {
+    "property_varejo_app": "272846783",
+    "property_farma": "374507450",
+
+    "plataforma_varejo": "WEB",
+    "plataforma_app": "APP"
+  },
+
+  "search_console": {
+    "site_url_varejo": "https://www.bemol.com.br/",
+    "site_url_farma": "https://www.bemolfarma.com.br/"
+  },
+
+  "relatorio": {
+    "mes": 5,
+    "ano": 2026,
+    "nome_mes": "Maio",
+    "logo_bemol": "https://bemolqa.vtexassets.com/assets/vtex/assets-builder/bemolqa.store-theme/17.0.3-beta.0/images/bemol-logo___0e4ce7bac603e6a725fdc3b40ad03e13.svg",
+    "logo_farma": "https://bemolqa.vtexassets.com/assets/vtex/assets-builder/bemolqa.farma-store-theme/15.1.2/farma/BemolFarma-logo___f70c1013059e792726e86a13430b347e.svg"
+  },
+
+  "dados_manuais_excel": "dados_manuais.xlsx"
+}

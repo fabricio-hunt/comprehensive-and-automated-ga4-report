@@ -1,0 +1,25 @@
+# Environments
+.venv*
+venv/
+env/
+*.env
+
+# Credentials & Secrets
+client_secret*.json
+*.pickle
+token*.json
+credentials*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Cache & Temp
+cache/
+*.log
+
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/

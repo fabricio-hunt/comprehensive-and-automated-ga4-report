@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório SEO Bemol</title>
+  <!-- ECharts para renderização dos gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <!-- Fontes requeridas -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+  --bg: #f2f4f7;
+  --panel: #ffffff;
+  --panel-soft: #dfeefe;
+  --text: #203040;
+  --muted: #6f7d8c;
+  --blue: #1570d8;
+  --blue-soft: #dcecff;
+  --green: #16a34a;
+  --red: #dc2626;
+  --border: #d9e0e7;
+  --shadow: 0 14px 38px rgba(26, 71, 122, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Nunito", "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.report-shell {
+  width: 100%;
+}
+
+.page {
+  width: 297mm;
+  height: 209mm;
+  padding: 12mm 16mm;
+  margin: 0 auto;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 6mm;
+  overflow: hidden;
+  page-break-after: always;
+  page-break-inside: avoid;
+  position: relative;
+}
+
+.cover-page {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+}
+
+.cover-kicker {
+  width: 84mm;
+  height: 1.5mm;
+  background: var(--blue);
+  margin-bottom: 16mm;
+}
+
+.cover-left h1 {
+  font-size: 26px;
+  line-height: 1.15;
+  margin: 0 0 12mm;
+  color: var(--blue);
+}
+
+.cover-left h2 {
+  font-size: 18px;
+  margin: 0 0 5mm;
+  color: var(--blue);
+  font-weight: 500;
+}
+
+.cover-left p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--blue);
+}
+
+.brand-row {
+  margin-top: 16mm;
+  display: flex;
+  gap: 10mm;
+  align-items: center;
+}
+
+.brand-row img,
+.section-header img {
+  max-height: 14mm;
+  max-width: 40mm;
+  object-fit: contain;
+}
+
+.cover-right {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-illustration {
+  width: 105mm;
+  height: 75mm;
+  position: relative;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #eaf4ff 0%, #d7e8ff 100%);
+  box-shadow: var(--shadow);
+}
+
+.hero-card {
+  position: absolute;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 0 18px 30px rgba(35, 88, 151, 0.16);
+}
+
+.hero-card.large {
+  width: 44mm;
+  height: 28mm;
+  left: 16mm;
+  top: 20mm;
+}
+
+.hero-card.small.top {
+  width: 26mm;
+  height: 22mm;
+  right: 15mm;
+  top: 14mm;
+}
+
+.hero-card.small.bottom {
+  width: 30mm;
+  height: 24mm;
+  right: 22mm;
+  bottom: 12mm;
+}
+
+.hero-badge {
+  position: absolute;
+  right: 35mm;
+  top: 28mm;
+  width: 20mm;
+  height: 20mm;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--blue);
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8mm;
+}
+
+.section-header h2 {
+  font-size: 24px;
+  line-height: 1.1;
+  color: var(--blue);
+  margin: 0;
+  font-weight: 700;
+}
+
+.header-sub {
+  display: inline-block;
+  margin-top: 2mm;
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: lowercase;
+}
+
+.summary-grid,
+.two-column-grid,
+.note-grid.two,
+.app-layout {
+  display: grid;
+  gap: 6mm;
+}
+
+.summary-grid {
+  grid-template-columns: 1.3fr 0.7fr;
+}
+
+.summary-card,
+.panel,
+.metric-card,
+.search-kpi-card,
+.keyword-summary {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.summary-card {
+  padding: 8mm;
+}
+
+.summary-card h3,
+.panel h3 {
+  margin: 0 0 5mm;
+  font-size: 14px;
+}
+
+.summary-card ul {
+  margin: 0;
+  padding-left: 5mm;
+  display: grid;
+  gap: 4mm;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.summary-card p,
+.note-box p,
+.metric-comparison span,
+.metric-comparison strong,
+.search-kpi-card span,
+.search-kpi-card em,
+.search-kpi-card small,
+table {
+  font-size: 10px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6mm;
+}
+
+.cards-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4mm;
+}
+
+.metric-card {
+  padding: 6mm;
+  display: flex;
+  flex-direction: column;
+  gap: 4mm;
+}
+
+.metric-title {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 10px;
+}
+
+.metric-value {
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.metric-comparison {
+  display: flex;
+  justify-content: space-between;
+  gap: 4mm;
+  align-items: center;
+  padding-top: 3mm;
+  border-top: 1px solid #edf1f5;
+}
+
+.metric-comparison div {
+  display: flex;
+  flex-direction: column;
+  gap: 1mm;
+}
+
+.metric-comparison span {
+  color: var(--muted);
+}
+
+.delta {
+  padding: 1.5mm 3mm;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.delta.up {
+  color: var(--green);
+  background: #dcfce7;
+}
+
+.delta.down {
+  color: var(--red);
+  background: #fee2e2;
+}
+
+.delta.neutral {
+  color: var(--muted);
+  background: #eef2f6;
+}
+
+.note-box {
+  background: #cfe2ff;
+  color: #183b63;
+  border-radius: 14px;
+  padding: 4mm 5mm;
+  line-height: 1.5;
+  break-inside: avoid;
+}
+
+.chart-note {
+  min-height: 26mm;
+}
+
+.note-box p {
+  margin: 0 0 3mm;
+}
+
+.note-box p:last-child {
+  margin-bottom: 0;
+}
+
+.two-column-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.align-start {
+  align-items: start;
+}
+
+.chart-panel {
+  padding: 5mm;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(30, 64, 120, 0.06);
+}
+
+.chart-panel h3 {
+  margin: 0 0 3mm;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.chart {
+  width: 100%;
+  height: 95mm;
+}
+
+.chart.small {
+  height: 60mm;
+}
+
+.chart.tall {
+  height: 110mm;
+}
+
+.stack-grid {
+  display: grid;
+  gap: 6mm;
+}
+
+.split-panel {
+  display: grid;
+  grid-template-columns: 72mm 1fr;
+  align-items: center;
+  gap: 4mm;
+  padding: 5mm;
+}
+
+.mini-chart {
+  height: 65mm;
+}
+
+.share-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 4mm;
+}
+
+.share-metrics span {
+  display: block;
+  color: var(--muted);
+  font-size: 9px;
+  margin-bottom: 1mm;
+}
+
+.share-metrics strong {
+  font-size: 14px;
+}
+
+.note-grid.two {
+  grid-template-columns: 1fr 1fr;
+}
+
+.search-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5mm;
+}
+
+.search-card-grid.four-cols {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.search-kpi-card {
+  padding: 5mm;
+  display: flex;
+  flex-direction: column;
+  gap: 3mm;
+}
+
+.search-kpi-card span,
+.search-kpi-card small {
+  color: var(--muted);
+}
+
+.search-kpi-card strong {
+  font-size: 20px;
+}
+
+.keyword-summary {
+  padding: 4mm 6mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.keyword-summary span {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.keyword-summary strong {
+  font-size: 24px;
+  color: var(--blue);
+}
+
+.table-panel {
+  padding: 5mm;
+}
+
+.table-panel table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-panel th,
+.table-panel td {
+  text-align: left;
+  padding: 2.5mm 2mm;
+  border-bottom: 1px solid #edf1f5;
+  vertical-align: top;
+}
+
+.table-panel th {
+  color: var(--muted);
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.pill {
+  display: inline-block;
+  background: #e9f2ff;
+  color: var(--blue);
+  border-radius: 999px;
+  padding: 1mm 3mm;
+  font-size: 8px;
+  text-transform: lowercase;
+}
+
+.app-layout {
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: start;
+}
+
+.app-main {
+  display: grid;
+  gap: 6mm;
+}
+
+.side-note {
+  min-height: 80mm;
+}
+
+@page {
+  size: A4 landscape;
+  margin: 0;
+}
+
+  </style>
+</head>
+<body>
+  <div class="report-shell">
+
+    <!-- Slide 1: Capa -->
+    <div class="page cover-page">
+      <div class="cover-left">
+        <h1>Relatório SEO<br>& Search</h1>
+        <h2> / 2026</h2>
+        <p>Bemol Varejo · Bemol Farma · App Bemol</p>
+        <div class="cover-kicker"></div>
+        <div class="brand-row">
+          <img src="https://bemolqa.vtexassets.com/assets/vtex/assets-builder/bemolqa.store-theme/17.0.3-beta.0/images/bemol-logo___0e4ce7bac603e6a725fdc3b40ad03e13.svg" alt="Bemol" />
+          <img src="https://bemolqa.vtexassets.com/assets/vtex/assets-builder/bemolqa.farma-store-theme/15.1.2/farma/BemolFarma-logo___f70c1013059e792726e86a13430b347e.svg" alt="Farma" />
+        </div>
+      </div>
+      <div class="cover-right">
+        <div class="hero-illustration">
+          <div class="hero-card large"></div>
+          <div class="hero-card small top"></div>
+          <div class="hero-card small bottom"></div>
+          <div class="hero-badge">SEO</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: Visão Geral -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Visão Geral</h2>
+          <span class="header-sub">Resumo Executivo</span>
+        </div>
+        <img src="https://bemolqa.vtexassets.com/assets/vtex/assets-builder/bemolqa.store-theme/17.0.3-beta.0/images/bemol-logo___0e4ce7bac603e6a725fdc3b40ad03e13.svg" alt="Bemol" />
+      </div>
+      <div class="note-box">
+        <p><strong>Destaques:</strong></p>
+        <ul>
+            <li>Varejo: receita orgânica atingiu R$ 4,7 mi, com variação de 14,8% vs. mês anterior e 5,1% vs. mesmo mês do ano anterior.</li>
+            <li>No Varejo Web, sessões (8,8%), usuários (5,4%) e engajamento (-0,7 p.p.) evoluíram no comparativo mensal.</li>
+            <li>No App Bemol, o canal orgânico variou 19,8% em receita, 13,8% em transações e 9,3% em usuários ativos, representando 4,4% da receita total do aplicativo.</li>
+            <li>A Bemol Farma apresentou variação mensal de 12,2% em sessões, 10,2% em usuários e 9,9% em receita orgânica.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Slide 3: Web Performance -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Performance Orgânica &rarr; Web</h2>
+          <span class="header-sub">Varejo Web</span>
+        </div>
+        <img src="https://bemolqa.vtexassets.com/assets/vtex/assets-builder/bemolqa.store-theme/17.0.3-beta.0/images/bemol-logo___0e4ce7bac603e6a725fdc3b40ad03e13.svg" alt="Bemol" />
+      </div>
+      
+      <div class="cards-grid-4">
+        <div class="metric-card">
+          <span class="metric-title">Sessões orgânicas</span>
+          <span class="metric-value">272.584</span>
+          <div class="metric-comparison">
+             <div>
+                <span>YoY · vs Mai/2025</span>
+                <strong>338.672</strong>
+             </div>
+             <div class="delta down">↓ 19,5%</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>MoM · vs mês anterior</span>
+                <strong>250.541</strong>
+             </div>
+             <div class="delta up">↑ 8,8%</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <span class="metric-title">Taxa de engajamento</span>
+          <span class="metric-value">86,74%</span>
+          <div class="metric-comparison">
+             <div>
+                <span>YoY · vs Mai/2025</span>
+                <strong>88,41%</strong>
+             </div>
+             <div class="delta down">↓ 1,7 p.p.</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>MoM · vs mês anterior</span>
+                <strong>87,40%</strong>
+             </div>
+             <div class="delta down">↓ 0,7 p.p.</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <span class="metric-title">Receita orgânica</span>
+          <span class="metric-value">R$ 4.669.409,40</span>
+          <div class="metric-comparison">
+             <div>
+                <span>YoY · vs Mai/2025</span>
+                <strong>R$ 4.441.106,74</strong>
+             </div>
+             <div class="delta up">↑ 5,1%</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>MoM · vs mês anterior</span>
+                <strong>R$ 4.068.881,52</strong>
+             </div>
+             <div class="delta up">↑ 14,8%</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <span class="metric-title">Usuários orgânicos</span>
+          <span class="metric-value">163.366</span>
+          <div class="metric-comparison">
+             <div>
+                <span>YoY · vs Mai/2025</span>
+                <strong>185.566</strong>
+             </div>
+             <div class="delta down">↓ 12,0%</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>MoM · vs mês anterior</span>
+                <strong>154.925</strong>
+             </div>
+             <div class="delta up">↑ 5,4%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-column-grid">
+        <div class="chart-panel">
+          <h3>Evolução de Sessões (Web)</h3>
+          <div id="chart-sessoes-web" class="chart small"></div>
+        </div>
+        <div class="chart-panel">
+          <h3>Evolução da Receita (Web)</h3>
+          <div id="chart-receita-web" class="chart small"></div>
+        </div>
+      </div>
+      
+      <div class="two-column-grid">
+        <div class="chart-panel">
+          <h3>Participação Orgânica</h3>
+          <div id="chart-share-web" class="chart small"></div>
+        </div>
+        <div class="chart-panel">
+          <h3>Receita por Sessão</h3>
+          <div id="chart-rps-web" class="chart small"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Web SEO Visibilidade -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Visibilidade &rarr; Busca e IA</h2>
+          <span class="header-sub">Varejo Web</span>
+        </div>
+        <img src="https://bemolqa.vtexassets.com/assets/vtex/assets-builder/bemolqa.store-theme/17.0.3-beta.0/images/bemol-logo___0e4ce7bac603e6a725fdc3b40ad03e13.svg" alt="Bemol" />
+      </div>
+
+      <div class="two-column-grid">
+        <div class="chart-panel">
+          <h3>Impressões GSC</h3>
+          <div id="chart-impressoes-web" class="chart small"></div>
+        </div>
+        <div class="chart-panel">
+          <h3>Índice Comparativo</h3>
+          <div id="chart-indice-web" class="chart small"></div>
+        </div>
+      </div>
+      
+      <div class="two-column-grid">
+        <div class="table-panel">
+          <h3>Top Páginas</h3>
+          <table>
+            <tr><th>Página</th><th>Impressões</th></tr>
+              <tr>
+                <td>/</td>
+                <td>864.184</td>
+              </tr>
+              <tr>
+                <td>/atendimento</td>
+                <td>545.270</td>
+              </tr>
+              <tr>
+                <td>/emprestimo-pessoal</td>
+                <td>86.680</td>
+              </tr>
+              <tr>
+                <td>/celular-e-smartphone</td>
+                <td>661.568</td>
+              </tr>
+              <tr>
+                <td>/renegociacao</td>
+                <td>19.365</td>
+              </tr>
+              <tr>
+                <td>/contabemol</td>
+                <td>72.251</td>
+              </tr>
+              <tr>
+                <td>/eletrodomesticos</td>
+                <td>526.812</td>
+              </tr>
+              <tr>
+                <td>/bemolrun</td>
+                <td>10.025</td>
+              </tr>
+              <tr>
+                <td>/emprestimos</td>
+                <td>405.398</td>
+              </tr>
+              <tr>
+                <td>/account</td>
+                <td>310.500</td>
+              </tr>
+          </table>
+        </div>
+        <div class="table-panel">
+          <h3>Top Consultas (Sem marca)</h3>
+          <table>
+            <tr><th>Consulta</th><th>Impressões</th></tr>
+              <tr>
+                <td>bemil</td>
+                <td>830</td>
+              </tr>
+              <tr>
+                <td>incesto real</td>
+                <td>11.121</td>
+              </tr>
+              <tr>
+                <td>empréstimo pessoal online whatsapp</td>
+                <td>3.029</td>
+              </tr>
+              <tr>
+                <td>emprestimo pessoal</td>
+                <td>1.574</td>
+              </tr>
+              <tr>
+                <td>emprestimo 200 reais</td>
+                <td>1.944</td>
+              </tr>
+              <tr>
+                <td>bemo</td>
+                <td>1.988</td>
+              </tr>
+              <tr>
+                <td>empréstimo de 200 reais</td>
+                <td>1.949</td>
+              </tr>
+              <tr>
+                <td>bmol</td>
+                <td>837</td>
+              </tr>
+              <tr>
+                <td>empréstimo pessoal</td>
+                <td>858</td>
+              </tr>
+              <tr>
+                <td>brmol</td>
+                <td>671</td>
+              </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: App Bemol -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Performance Orgânica &rarr; App</h2>
+          <span class="header-sub">App Bemol</span>
+        </div>
+        <img src="https://bemolqa.vtexassets.com/assets/vtex/assets-builder/bemolqa.store-theme/17.0.3-beta.0/images/bemol-logo___0e4ce7bac603e6a725fdc3b40ad03e13.svg" alt="Bemol" />
+      </div>
+
+      <div class="app-layout">
+        <div class="app-main">
+          <div class="cards-grid">
+            <div class="metric-card">
+              <span class="metric-title">Receita orgânica</span>
+              <span class="metric-value">R$ 2.691.906,20</span>
+              <div class="metric-comparison">
+                 <div>
+                    <span>mai/26 vs mai/25</span>
+                 </div>
+                 <div class="delta down">↓ 21,4%</div>
+              </div>
+              <div class="metric-comparison">
+                 <div>
+                    <span>vs mês anterior</span>
+                 </div>
+                 <div class="delta up">↑ 19,8%</div>
+              </div>
+            </div>
+            <div class="metric-card">
+              <span class="metric-title">Transações</span>
+              <span class="metric-value">3.211</span>
+              <div class="metric-comparison">
+                 <div>
+                    <span>mai/26 vs mai/25</span>
+                 </div>
+                 <div class="delta down">↓ 27,8%</div>
+              </div>
+              <div class="metric-comparison">
+                 <div>
+                    <span>vs mês anterior</span>
+                 </div>
+                 <div class="delta up">↑ 13,8%</div>
+              </div>
+            </div>
+            <div class="metric-card">
+              <span class="metric-title">Usuários ativos</span>
+              <span class="metric-value">64.513</span>
+              <div class="metric-comparison">
+                 <div>
+                    <span>mai/26 vs mai/25</span>
+                 </div>
+                 <div class="delta down">↓ 17,2%</div>
+              </div>
+              <div class="metric-comparison">
+                 <div>
+                    <span>vs mês anterior</span>
+                 </div>
+                 <div class="delta up">↑ 9,3%</div>
+              </div>
+            </div>
+            <div class="metric-card">
+              <span class="metric-title">Share orgânico</span>
+              <span class="metric-value">4,4%</span>
+              <div class="metric-comparison">
+                 <div>
+                    <span>da receita total do app</span>
+                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="chart-panel">
+            <h3>Evolução da Receita (App)</h3>
+            <div id="chart-app-receita" class="chart tall"></div>
+          </div>
+        </div>
+        <div class="note-box side-note">
+          <p><strong>Destaques do App:</strong> Em Maio, o canal orgânico do App Bemol registrou R$ 2.691.906,20 em receita e 3.211 transações, com share de 4,4% da receita total do aplicativo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Farma -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Performance Orgânica &rarr; Farma</h2>
+          <span class="header-sub">Bemol Farma</span>
+        </div>
+        <img src="https://bemolqa.vtexassets.com/assets/vtex/assets-builder/bemolqa.farma-store-theme/15.1.2/farma/BemolFarma-logo___f70c1013059e792726e86a13430b347e.svg" alt="Farma" />
+      </div>
+      
+      <div class="cards-grid-4">
+        <div class="metric-card">
+          <span class="metric-title">Sessões orgânicas</span>
+          <span class="metric-value">87.053</span>
+          <div class="metric-comparison">
+             <div>
+                <span>YoY · vs Mai/2025</span>
+                <strong>110.232</strong>
+             </div>
+             <div class="delta down">↓ 21,0%</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>MoM · vs mês anterior</span>
+                <strong>77.606</strong>
+             </div>
+             <div class="delta up">↑ 12,2%</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <span class="metric-title">Taxa de engajamento</span>
+          <span class="metric-value">54,02%</span>
+          <div class="metric-comparison">
+             <div>
+                <span>YoY · vs Mai/2025</span>
+                <strong>58,01%</strong>
+             </div>
+             <div class="delta down">↓ 4,0 p.p.</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>MoM · vs mês anterior</span>
+                <strong>55,26%</strong>
+             </div>
+             <div class="delta down">↓ 1,2 p.p.</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <span class="metric-title">Receita orgânica</span>
+          <span class="metric-value">R$ 327.587,53</span>
+          <div class="metric-comparison">
+             <div>
+                <span>YoY · vs Mai/2025</span>
+                <strong>R$ 622.239,38</strong>
+             </div>
+             <div class="delta down">↓ 47,4%</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>MoM · vs mês anterior</span>
+                <strong>R$ 298.164,35</strong>
+             </div>
+             <div class="delta up">↑ 9,9%</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <span class="metric-title">Usuários orgânicos</span>
+          <span class="metric-value">60.827</span>
+          <div class="metric-comparison">
+             <div>
+                <span>YoY · vs Mai/2025</span>
+                <strong>72.869</strong>
+             </div>
+             <div class="delta down">↓ 16,5%</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>MoM · vs mês anterior</span>
+                <strong>55.192</strong>
+             </div>
+             <div class="delta up">↑ 10,2%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-column-grid">
+        <div class="chart-panel">
+          <h3>Impressões GSC (Farma)</h3>
+          <div id="chart-impressoes-farma" class="chart small"></div>
+        </div>
+        <div class="table-panel">
+          <h3>Top Consultas Farma (Sem marca)</h3>
+          <table>
+            <tr><th>Consulta</th><th>Impressões</th></tr>
+              <tr>
+                <td>bemol</td>
+                <td>382.060</td>
+              </tr>
+              <tr>
+                <td>proviron 25mg</td>
+                <td>2.620</td>
+              </tr>
+              <tr>
+                <td>carmed copa</td>
+                <td>31.097</td>
+              </tr>
+              <tr>
+                <td>farma bemol</td>
+                <td>949</td>
+              </tr>
+              <tr>
+                <td>drenogrip como tomar</td>
+                <td>2.581</td>
+              </tr>
+              <tr>
+                <td>drogaria manaus</td>
+                <td>2.313</td>
+              </tr>
+              <tr>
+                <td>bemol saude</td>
+                <td>138</td>
+              </tr>
+              <tr>
+                <td>farmácia bemol</td>
+                <td>412</td>
+              </tr>
+              <tr>
+                <td>carmed copa do mundo</td>
+                <td>8.441</td>
+              </tr>
+              <tr>
+                <td>resfegripe tomar de quantas em quantas horas</td>
+                <td>1.851</td>
+              </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Page -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Relatório SEO Concluído</h2>
+          <span class="header-sub">Obrigado</span>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 50mm; color: #9CA3AF;">
+        Relatório SEO & Search &middot;  / 2026 &middot; Bemol
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    window.REPORT_CHARTS = {"meta": {"ano": 2026}, "labels12": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"], "web_sessions_current": [291539.0, 236347.0, 272751.0, 250541.0, 272584.0, null, null, null, null, null, null, null], "web_sessions_previous": [358836.0, 291197.0, 310514.0, 314505.0, 338672.0, 297732.0, 315545.0, 287917.0, 280228.0, 286479.0, 310463.0, 276460.0], "web_revenue_current": [5106981.159847999, 3958250.794589, 4358840.146048, 4068881.5187179996, 4669409.399867, null, null, null, null, null, null, null], "web_revenue_previous": [3634792.8699090006, 2989664.8100379994, 4025084.8999550003, 4029195.9500760003, 4441106.740158999, 4083921.7798080007, 4199193.410001999, 4780239.191963, 5351065.100723, 5018885.908422, 7576675.560747, 4897347.547174999], "web_share": 21.9, "web_rps_organico": 17.13, "web_rps_total": 6.54, "index_labels": ["Jan/25", "Fev/25", "Mar/25", "Abr/25", "Mai/25", "Jun/25", "Jul/25", "Ago/25", "Set/25", "Out/25", "Nov/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26", "Ago/26", "Set/26", "Out/26", "Nov/26", "Dez/26"], "web_index_organico": [100.0, 82.3, 110.7, 110.9, 122.2, 112.4, 115.5, 131.5, 147.2, 138.1, 208.4, 134.7, 140.5, 108.9, 119.9, 111.9, 128.5, null, null, null, null, null, null, null], "web_index_total": [100.0, 99.8, 107.5, 104.4, 112.8, 105.8, 123.6, 139.8, 150.1, 142.5, 221.4, 149.1, 146.0, 117.4, 135.9, 125.7, 144.8, null, null, null, null, null, null, null], "web_impressions_labels": ["Nov/25", "Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26"], "web_impressions_values": [20407939, 15044865, 15335213, 13188200, 16160486, 14441022, 12919632], "app_revenue_current": [2844970.149959, 2404758.140146, 2575340.720026, 2246916.27984, 2691906.199955, null, null, null, null, null, null, null], "app_revenue_previous": [2488252.25003, 2516200.9101699996, 2505722.009875, 2750478.200124001, 3423724.999797, 3261324.240079, 3429247.529805, 3386333.7101520007, 4301516.309865001, 4626561.969887, 5431068.129707001, 2850706.569851], "farma_impressions_labels": ["Nov/25", "Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26"], "farma_impressions_values": [11349486, 11603197, 12777688, 15095200, 18486308, 12097605, 9475222]};
+  </script>
+  <script>
+    (function () {
+  const charts = window.REPORT_CHARTS || {};
+
+  const blue = '#1E6FEB';
+  const blueSoft = '#7fb8ff';
+  const gray = '#D1D5DB';
+  const text = '#374151';
+  const muted = '#9CA3AF';
+  const grid = '#EDF2F7';
+
+  function currencyCompact(value) {
+    if (Math.abs(value) >= 1000000) return 'R$ ' + (value / 1000000).toFixed(1).replace('.', ',') + ' mi';
+    if (Math.abs(value) >= 1000) return 'R$ ' + (value / 1000).toFixed(0).replace('.', ',') + ' mil';
+    return 'R$ ' + value.toFixed(0).replace('.', ',');
+  }
+
+  function numberCompact(value) {
+    if (Math.abs(value) >= 1000000) return (value / 1000000).toFixed(1).replace('.', ',') + 'M';
+    if (Math.abs(value) >= 1000) return (value / 1000).toFixed(0).replace('.', ',') + 'k';
+    return String(Math.round(value));
+  }
+
+  function createChart(id, option) {
+    const element = document.getElementById(id);
+    if (!element || typeof echarts === 'undefined') return;
+    const chart = echarts.init(element, null, { renderer: 'svg' });
+    chart.setOption(option);
+    window.addEventListener('resize', () => chart.resize());
+  }
+
+  const labels12 = charts.labels12 || ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+  createChart('chart-sessoes-web', {
+    textStyle: { fontFamily: 'Inter', color: text },
+    color: [gray, blue],
+    tooltip: { trigger: 'axis' },
+    legend: { bottom: 0 },
+    grid: { left: 40, right: 20, top: 20, bottom: 40 },
+    xAxis: { type: 'category', data: labels12, axisLine: { lineStyle: { color: grid } } },
+    yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } } },
+    series: [
+      { name: String((charts.meta && charts.meta.ano ? charts.meta.ano - 1 : 2025)), type: 'bar', barMaxWidth: 22, data: charts.web_sessions_previous || [], label: { show: true, position: 'top', formatter: (p) => numberCompact(p.value), color: muted, fontSize: 9 } },
+      { name: String((charts.meta && charts.meta.ano) || 2026), type: 'bar', barMaxWidth: 22, data: charts.web_sessions_current || [], itemStyle: { borderRadius: [6, 6, 0, 0] }, label: { show: true, position: 'top', formatter: (p) => numberCompact(p.value), color: text, fontSize: 10, fontWeight: 'bold' } }
+    ]
+  });
+
+  createChart('chart-receita-web', {
+    textStyle: { fontFamily: 'Inter', color: text },
+    color: [gray, blue],
+    tooltip: {
+      trigger: 'axis',
+      valueFormatter: currencyCompact,
+      borderColor: '#E5E7EB',
+      textStyle: { color: text }
+    },
+    legend: {
+      top: 0,
+      left: 0,
+      icon: 'line',
+      itemWidth: 18,
+      itemHeight: 2,
+      textStyle: { color: muted, fontSize: 11 }
+    },
+    grid: { left: 56, right: 18, top: 34, bottom: 34 },
+    xAxis: {
+      type: 'category',
+      data: labels12,
+      boundaryGap: false,
+      axisLine: { lineStyle: { color: '#EEF2F7' } },
+      axisTick: { show: false },
+      axisLabel: { color: muted, fontSize: 10 }
+    },
+    yAxis: {
+      type: 'value',
+      splitNumber: 5,
+      axisLine: { show: false },
+      axisTick: { show: false },
+      splitLine: { lineStyle: { color: grid, width: 1 } },
+      axisLabel: { formatter: currencyCompact, color: muted, fontSize: 10 }
+    },
+    series: [
+      {
+        name: String((charts.meta && charts.meta.ano ? charts.meta.ano - 1 : 2025)),
+        type: 'line',
+        smooth: false,
+        symbol: 'circle',
+        symbolSize: 6,
+        lineStyle: { width: 2, type: 'dashed' },
+        itemStyle: { color: gray, borderColor: '#FFFFFF', borderWidth: 1 },
+        data: charts.web_revenue_previous || []
+      },
+      {
+        name: String((charts.meta && charts.meta.ano) || 2026),
+        type: 'line',
+        smooth: false,
+        symbol: 'circle',
+        symbolSize: 7,
+        lineStyle: { width: 3 },
+        itemStyle: { color: blue, borderColor: '#FFFFFF', borderWidth: 1.5 },
+        data: charts.web_revenue_current || [],
+        label: { show: true, position: 'top', formatter: (p) => currencyCompact(p.value), color: text, fontSize: 9, backgroundColor: 'rgba(255,255,255,0.7)', borderRadius: 2, padding: 2 }
+      }
+    ]
+  });
+
+  createChart('chart-share-web', {
+    textStyle: { fontFamily: 'Inter', color: text },
+    tooltip: { trigger: 'item' },
+    color: [blue, '#d8dee6'],
+    series: [{
+      type: 'pie',
+      radius: ['58%', '82%'],
+      center: ['50%', '50%'],
+      label: {
+        show: true,
+        position: 'center',
+        formatter: (charts.web_share || 0).toFixed(1).replace('.', ',') + '%\ndo site',
+        fontSize: 18,
+        fontWeight: 700,
+        lineHeight: 24,
+      },
+      data: [
+        { value: charts.web_share || 0, name: 'Orgânico' },
+        { value: 100 - (charts.web_share || 0), name: 'Total restante' }
+      ]
+    }]
+  });
+
+  createChart('chart-rps-web', {
+    textStyle: { fontFamily: 'Inter', color: text },
+    color: [blue, gray],
+    tooltip: { trigger: 'axis' },
+    grid: { left: 44, right: 20, top: 10, bottom: 30 },
+    xAxis: { type: 'category', data: ['Orgânico', 'Total'] },
+    yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } }, axisLabel: { formatter: currencyCompact } },
+    series: [{ type: 'bar', barMaxWidth: 34, data: [charts.web_rps_organico || 0, charts.web_rps_total || 0], itemStyle: { borderRadius: [8, 8, 0, 0] }, label: { show: true, position: 'top', formatter: (p) => currencyCompact(p.value), color: text, fontSize: 11, fontWeight: 'bold' } }]
+  });
+
+  createChart('chart-indice-web', {
+    textStyle: { fontFamily: 'Inter', color: text },
+    color: [blue, gray],
+    tooltip: { trigger: 'axis' },
+    legend: { bottom: 0 },
+    grid: { left: 48, right: 16, top: 16, bottom: 40 },
+    xAxis: { type: 'category', data: charts.index_labels || [] },
+    yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } } },
+    series: [
+      { name: 'Receita orgânica', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 3 }, data: charts.web_index_organico || [], label: { show: true, position: 'top', color: text, fontSize: 8, backgroundColor: 'rgba(255,255,255,0.7)', padding: 1 } },
+      { name: 'Receita total', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 2, type: 'dashed' }, data: charts.web_index_total || [] }
+    ]
+  });
+
+  createChart('chart-impressoes-web', {
+    textStyle: { fontFamily: 'Inter', color: text },
+    color: [blue],
+    tooltip: { trigger: 'axis' },
+    grid: { left: 48, right: 16, top: 20, bottom: 24 },
+    xAxis: { type: 'category', data: charts.web_impressions_labels || [] },
+    yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } }, axisLabel: { formatter: numberCompact } },
+    series: [{ type: 'line', smooth: true, areaStyle: { opacity: 0.15 }, symbolSize: 8, data: charts.web_impressions_values || [], label: { show: true, position: 'top', formatter: (p) => numberCompact(p.value), color: text, fontSize: 9, backgroundColor: 'rgba(255,255,255,0.8)', padding: 2, borderRadius: 2 } }]
+  });
+
+  createChart('chart-app-receita', {
+    textStyle: { fontFamily: 'Inter', color: text },
+    color: [gray, blue],
+    tooltip: {
+      trigger: 'axis',
+      valueFormatter: currencyCompact,
+      borderColor: '#E5E7EB',
+      textStyle: { color: text }
+    },
+    legend: {
+      top: 0,
+      left: 0,
+      icon: 'line',
+      itemWidth: 18,
+      itemHeight: 2,
+      textStyle: { color: muted, fontSize: 11 }
+    },
+    grid: { left: 56, right: 16, top: 34, bottom: 34 },
+    xAxis: {
+      type: 'category',
+      data: labels12,
+      boundaryGap: false,
+      axisLine: { lineStyle: { color: '#EEF2F7' } },
+      axisTick: { show: false },
+      axisLabel: { color: muted, fontSize: 10 }
+    },
+    yAxis: {
+      type: 'value',
+      splitNumber: 5,
+      axisLine: { show: false },
+      axisTick: { show: false },
+      splitLine: { lineStyle: { color: grid, width: 1 } },
+      axisLabel: { formatter: currencyCompact, color: muted, fontSize: 10 }
+    },
+    series: [
+      {
+        name: String((charts.meta && charts.meta.ano ? charts.meta.ano - 1 : 2025)),
+        type: 'line',
+        smooth: false,
+        symbol: 'circle',
+        symbolSize: 6,
+        lineStyle: { width: 2, type: 'dashed' },
+        itemStyle: { color: gray, borderColor: '#FFFFFF', borderWidth: 1 },
+        data: charts.app_revenue_previous || []
+      },
+      {
+        name: String((charts.meta && charts.meta.ano) || 2026),
+        type: 'line',
+        smooth: false,
+        symbol: 'circle',
+        symbolSize: 7,
+        lineStyle: { width: 3 },
+        itemStyle: { color: blue, borderColor: '#FFFFFF', borderWidth: 1.5 },
+        data: charts.app_revenue_current || [],
+        label: { show: true, position: 'top', formatter: (p) => currencyCompact(p.value), color: text, fontSize: 9, backgroundColor: 'rgba(255,255,255,0.7)', borderRadius: 2, padding: 2 }
+      }
+    ]
+  });
+
+  createChart('chart-impressoes-farma', {
+    textStyle: { fontFamily: 'Inter', color: text },
+    color: [blueSoft],
+    tooltip: { trigger: 'axis' },
+    grid: { left: 48, right: 16, top: 20, bottom: 24 },
+    xAxis: { type: 'category', data: charts.farma_impressions_labels || [] },
+    yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } }, axisLabel: { formatter: numberCompact } },
+    series: [{ type: 'line', smooth: true, areaStyle: { opacity: 0.16 }, symbolSize: 8, data: charts.farma_impressions_values || [], label: { show: true, position: 'top', formatter: (p) => numberCompact(p.value), color: text, fontSize: 9, backgroundColor: 'rgba(255,255,255,0.8)', padding: 2, borderRadius: 2 } }]
+  });
+})();
+
+  </script>
+</body>
+</html>

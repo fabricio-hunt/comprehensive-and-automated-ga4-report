@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório SEO Bemol</title>
+  <!-- ECharts para renderização dos gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <!-- Fontes requeridas -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    {{ inline_css | safe }}
+  </style>
+</head>
+<body>
+  <div class="report-shell">
+
+    <!-- Slide 1: Capa -->
+    <div class="page cover-page">
+      <div class="cover-left">
+        <h1>Relatório SEO<br>& Search</h1>
+        <h2>{{ payload.meta.nome_mes }} / {{ payload.meta.ano }}</h2>
+        <p>Bemol Varejo · Bemol Farma · App Bemol</p>
+        <div class="cover-kicker"></div>
+        <div class="brand-row">
+          <img src="{{ payload.branding.logo_bemol }}" alt="Bemol" />
+          <img src="{{ payload.branding.logo_farma }}" alt="Farma" />
+        </div>
+      </div>
+      <div class="cover-right">
+        <div class="hero-illustration">
+          <div class="hero-card large"></div>
+          <div class="hero-card small top"></div>
+          <div class="hero-card small bottom"></div>
+          <div class="hero-badge">SEO</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: Visão Geral -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Visão Geral</h2>
+          <span class="header-sub">Resumo Executivo</span>
+        </div>
+        <img src="{{ payload.branding.logo_bemol }}" alt="Bemol" />
+      </div>
+      <div class="note-box">
+        <p><strong>Destaques:</strong></p>
+        <ul>
+          {% for h in payload.executive_summary.highlights %}
+            <li>{{ h }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Slide 3: Web Performance -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Performance Orgânica &rarr; Web</h2>
+          <span class="header-sub">Varejo Web</span>
+        </div>
+        <img src="{{ payload.branding.logo_bemol }}" alt="Bemol" />
+      </div>
+      
+      <div class="cards-grid-4">
+        {% for card in payload.web.cards %}
+        <div class="metric-card">
+          <span class="metric-title">{{ card.title }}</span>
+          <span class="metric-value">{{ card.value }}</span>
+          <div class="metric-comparison">
+             <div>
+                <span>{{ card.yoy.label }}</span>
+                <strong>{{ card.yoy.value }}</strong>
+             </div>
+             <div class="delta {{ card.yoy.class }}">{{ card.yoy.delta }}</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>{{ card.mom.label }}</span>
+                <strong>{{ card.mom.value }}</strong>
+             </div>
+             <div class="delta {{ card.mom.class }}">{{ card.mom.delta }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="two-column-grid">
+        <div class="chart-panel">
+          <h3>Evolução de Sessões (Web)</h3>
+          <div id="chart-sessoes-web" class="chart small"></div>
+        </div>
+        <div class="chart-panel">
+          <h3>Evolução da Receita (Web)</h3>
+          <div id="chart-receita-web" class="chart small"></div>
+        </div>
+      </div>
+      
+      <div class="two-column-grid">
+        <div class="chart-panel">
+          <h3>Participação Orgânica</h3>
+          <div id="chart-share-web" class="chart small"></div>
+        </div>
+        <div class="chart-panel">
+          <h3>Receita por Sessão</h3>
+          <div id="chart-rps-web" class="chart small"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Web SEO Visibilidade -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Visibilidade &rarr; Busca e IA</h2>
+          <span class="header-sub">Varejo Web</span>
+        </div>
+        <img src="{{ payload.branding.logo_bemol }}" alt="Bemol" />
+      </div>
+
+      <div class="two-column-grid">
+        <div class="chart-panel">
+          <h3>Impressões GSC</h3>
+          <div id="chart-impressoes-web" class="chart small"></div>
+        </div>
+        <div class="chart-panel">
+          <h3>Índice Comparativo</h3>
+          <div id="chart-indice-web" class="chart small"></div>
+        </div>
+      </div>
+      
+      <div class="two-column-grid">
+        <div class="table-panel">
+          <h3>Top Páginas</h3>
+          <table>
+            <tr><th>Página</th><th>Impressões</th></tr>
+            {% for item in payload.web.search.top_pages %}
+              <tr>
+                <td>{{ item.pagina[:45] }}{% if item.pagina|length > 45 %}...{% endif %}</td>
+                <td>{{ "{:,}".format(item.impressoes).replace(",", ".") }}</td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div class="table-panel">
+          <h3>Top Consultas (Sem marca)</h3>
+          <table>
+            <tr><th>Consulta</th><th>Impressões</th></tr>
+            {% for item in payload.web.search.top_queries %}
+              <tr>
+                <td>{{ item.consulta }}</td>
+                <td>{{ "{:,}".format(item.impressoes).replace(",", ".") }}</td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: App Bemol -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Performance Orgânica &rarr; App</h2>
+          <span class="header-sub">App Bemol</span>
+        </div>
+        <img src="{{ payload.branding.logo_bemol }}" alt="Bemol" />
+      </div>
+
+      <div class="app-layout">
+        <div class="app-main">
+          <div class="cards-grid">
+            {% for card in payload.app.cards %}
+            <div class="metric-card">
+              <span class="metric-title">{{ card.title }}</span>
+              <span class="metric-value">{{ card.value }}</span>
+              {% if card.yoy %}
+              <div class="metric-comparison">
+                 <div>
+                    <span>{{ payload.app.comparison_label }}</span>
+                 </div>
+                 <div class="delta {{ card.yoy_class }}">{{ card.yoy }}</div>
+              </div>
+              {% endif %}
+              {% if card.mom %}
+              <div class="metric-comparison">
+                 <div>
+                    <span>vs mês anterior</span>
+                 </div>
+                 <div class="delta {{ card.mom_class }}">{{ card.mom }}</div>
+              </div>
+              {% endif %}
+              {% if card.description %}
+              <div class="metric-comparison">
+                 <div>
+                    <span>{{ card.description }}</span>
+                 </div>
+              </div>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          <div class="chart-panel">
+            <h3>Evolução da Receita (App)</h3>
+            <div id="chart-app-receita" class="chart tall"></div>
+          </div>
+        </div>
+        <div class="note-box side-note">
+          <p><strong>Destaques do App:</strong> {{ payload.app.commentary }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Farma -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Performance Orgânica &rarr; Farma</h2>
+          <span class="header-sub">Bemol Farma</span>
+        </div>
+        <img src="{{ payload.branding.logo_farma }}" alt="Farma" />
+      </div>
+      
+      <div class="cards-grid-4">
+        {% for card in payload.farma.cards %}
+        <div class="metric-card">
+          <span class="metric-title">{{ card.title }}</span>
+          <span class="metric-value">{{ card.value }}</span>
+          <div class="metric-comparison">
+             <div>
+                <span>{{ card.yoy.label }}</span>
+                <strong>{{ card.yoy.value }}</strong>
+             </div>
+             <div class="delta {{ card.yoy.class }}">{{ card.yoy.delta }}</div>
+          </div>
+          <div class="metric-comparison">
+             <div>
+                <span>{{ card.mom.label }}</span>
+                <strong>{{ card.mom.value }}</strong>
+             </div>
+             <div class="delta {{ card.mom.class }}">{{ card.mom.delta }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="two-column-grid">
+        <div class="chart-panel">
+          <h3>Impressões GSC (Farma)</h3>
+          <div id="chart-impressoes-farma" class="chart small"></div>
+        </div>
+        <div class="table-panel">
+          <h3>Top Consultas Farma (Sem marca)</h3>
+          <table>
+            <tr><th>Consulta</th><th>Impressões</th></tr>
+            {% for item in payload.farma.search.top_queries %}
+              <tr>
+                <td>{{ item.consulta }}</td>
+                <td>{{ "{:,}".format(item.impressoes).replace(",", ".") }}</td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Page -->
+    <div class="page">
+      <div class="section-header">
+        <div>
+          <h2>Relatório SEO Concluído</h2>
+          <span class="header-sub">Obrigado</span>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 50mm; color: #9CA3AF;">
+        Relatório SEO & Search &middot; {{ payload.meta.nome_mes }} / {{ payload.meta.ano }} &middot; Bemol
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    window.REPORT_CHARTS = {{ charts_json | safe }};
+  </script>
+  <script>
+    {{ inline_js | safe }}
+  </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+COMO RODAR O GERADOR AUTOMATICO DO RELATORIO SEO
+=================================================
+
+Pasta do projeto:
+C:\Users\fabricio.barauna\OneDrive - BEMOL S A\Documentos\Relatório_Mensal_SEO_Completo\seo_report_auto
+
+
+1) COLOCAR O ARQUIVO DE CREDENCIAL
+----------------------------------
+Copie o arquivo client_secret.json para dentro da pasta seo_report_auto.
+
+A estrutura deve ficar assim:
+
+seo_report_auto\
+  client_secret.json
+  config.json
+  gerar_relatorio.py
+  instalar.bat
+
+
+2) INSTALAR AS DEPENDENCIAS
+---------------------------
+Execute o arquivo:
+
+instalar.bat
+
+Pode ser com duplo clique ou pelo terminal:
+
+cd "C:\Users\fabricio.barauna\OneDrive - BEMOL S A\Documentos\Relatório_Mensal_SEO_Completo\seo_report_auto"
+instalar.bat
+
+Esse passo instala as bibliotecas Python e cria o arquivo dados_manuais.xlsx.
+
+ATENÇÃO: Como a nova versão usa Playwright para gerar o PDF, execute também:
+playwright install
+
+
+3) PREENCHER OS DADOS MANUAIS DE IA
+-----------------------------------
+Abra o arquivo:
+
+dados_manuais.xlsx
+
+Preencha as abas:
+
+- IA_Varejo
+- IA_Farma
+- IA_Serie_Varejo
+- IA_Serie_Farma
+
+Esses dados sao os que vêm do BrightEdge ou outra ferramenta de visibilidade em IA.
+
+Depois de preencher, salve e feche o Excel antes de gerar o PDF.
+
+
+4) GERAR O RELATORIO
+--------------------
+Abra o terminal dentro da pasta seo_report_auto e execute:
+
+python gerar_relatorio.py --mes 6 --ano 2026
+
+Exemplo para Maio/2026:
+
+python gerar_relatorio.py --mes 5 --ano 2026
+
+Exemplo para Junho/2026:
+
+python gerar_relatorio.py --mes 6 --ano 2026
+
+
+5) AUTORIZACAO GOOGLE NA PRIMEIRA EXECUCAO
+------------------------------------------
+Na primeira vez, o navegador vai abrir pedindo autorizacao do Google.
+
+Use uma conta que tenha acesso a:
+
+- GA4
+- Google Search Console
+
+Depois de autorizar, o token fica salvo em:
+
+cache\token.pickle
+
+Nas proximas execucoes, normalmente nao sera necessario fazer login novamente.
+
+
+6) ONDE PEGAR O PDF GERADO
+--------------------------
+O PDF final sera salvo na pasta:
+
+output\
+
+Exemplo:
+
+output\Relatorio_SEO_Junho_2026.pdf
+
+
+COMANDO MENSAL PADRAO
+---------------------
+Todo mes, depois de atualizar o dados_manuais.xlsx, rode:
+
+python gerar_relatorio.py --mes NUMERO_DO_MES --ano ANO
+
+Exemplo:
+
+python gerar_relatorio.py --mes 6 --ano 2026
+
+
+OBSERVACAO SOBRE OS PERIODOS
+----------------------------
+Quando voce informa --mes 6 --ano 2026, o sistema busca automaticamente:
+
+- Mes atual: Junho/2026
+- Comparacao MoM: Maio/2026
+- Comparacao YoY: Junho/2025
+- Series mensais: Janeiro a Dezembro
+
+Ou seja, nao precisa alterar datas manualmente no GA4 ou Search Console.
