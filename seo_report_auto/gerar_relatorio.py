@@ -7,6 +7,7 @@ com ECharts e exporta PDF via Playwright.
 import json
 import sys
 import argparse
+import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / "src"))
@@ -28,7 +29,7 @@ from gsc import (
     buscar_total_keywords,
 )
 from report_data import preparar_contexto_relatorio, montar_payload_relatorio, MESES_CURTOS
-from html_renderer import renderizar_relatorio_html
+from html_renderer import renderizar_relatorio_html, gerar_indice_html
 from pdf_exporter import exportar_html_para_pdf
 
 BASE = Path(__file__).parent
@@ -79,15 +80,24 @@ def main():
     parser = argparse.ArgumentParser(description="Gerador de Relatório SEO Bemol")
     parser.add_argument("--mes", type=int, help="Mês do relatório (1-12)")
     parser.add_argument("--ano", type=int, help="Ano do relatório")
+    parser.add_argument("--mes-anterior", action="store_true", help="Calcula automaticamente o mês anterior a hoje (ideal para rodar todo dia 03 no cron)")
+    parser.add_argument("--no-pdf", action="store_true", help="Não gerar arquivo PDF estático (apenas HTML + índice Vercel)")
     parser.add_argument("--config", default="config.json", help="Arquivo de configuração")
     args = parser.parse_args()
 
     config = carregar_config(args.config)
 
-    if args.mes:
-        config["relatorio"]["mes"] = args.mes
-    if args.ano:
-        config["relatorio"]["ano"] = args.ano
+    if args.mes_anterior:
+        hoje = datetime.date.today()
+        primeiro_dia_mes_atual = hoje.replace(day=1)
+        ultimo_dia_mes_ant = primeiro_dia_mes_atual - datetime.timedelta(days=1)
+        config["relatorio"]["mes"] = ultimo_dia_mes_ant.month
+        config["relatorio"]["ano"] = ultimo_dia_mes_ant.year
+    else:
+        if args.mes:
+            config["relatorio"]["mes"] = args.mes
+        if args.ano:
+            config["relatorio"]["ano"] = args.ano
 
     contexto = preparar_contexto_relatorio(config)
     mes = contexto.mes
@@ -203,12 +213,20 @@ def main():
 
     renderizar_relatorio_html(payload, str(html_path))
 
-    print("\n[4/4] Exportando PDF...")
-    exportar_html_para_pdf(str(html_path), str(pdf_path))
+    if not args.no_pdf:
+        print("\n[4/4] Exportando PDF...")
+        exportar_html_para_pdf(str(html_path), str(pdf_path))
+    else:
+        print("\n[4/4] Geração de PDF estático ignorada (--no-pdf).")
+
+    print("\n[Vercel] Gerando índice de relatórios em output/index.html...")
+    index_path = gerar_indice_html(output_dir)
 
     print("\nConcluído!")
     print(f"HTML gerado em: {html_path}")
-    print(f"PDF gerado em: {pdf_path}")
+    if not args.no_pdf:
+        print(f"PDF gerado em: {pdf_path}")
+    print(f"Portal índice gerado em: {index_path}")
     print("=" * 60)
 
 
