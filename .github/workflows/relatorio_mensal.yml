@@ -1,4 +1,4 @@
-name: Gerar Relatorio Mensal SEO e Atualizar Vercel
+name: Gerar Relatorio Mensal SEO e Publicar no Pages
 
 on:
   schedule:
@@ -9,6 +9,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   gerar-relatorio:
@@ -52,6 +54,22 @@ jobs:
           if git diff --staged --quiet; then
             echo "Nenhuma alteração detectada em output/."
           else
-            git commit -m "chore(report): auto generate monthly SEO report and update Vercel index"
+            git commit -m "chore(report): auto generate monthly SEO report and update index"
             git push origin main
           fi
+
+      - name: Upload da pasta output como artefato para o GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'seo_report_auto/output'
+
+  deploy-pages:
+    needs: gerar-relatorio
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

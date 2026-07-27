@@ -211,5 +211,7 @@ def gerar_indice_html(output_dir: Path) -> str:
 </html>"""
     index_path = output_dir / "index.html"
     index_path.write_text(html_content, encoding="utf-8")
+    nojekyll_path = output_dir / ".nojekyll"
+    nojekyll_path.touch(exist_ok=True)
     return str(index_path)
 
