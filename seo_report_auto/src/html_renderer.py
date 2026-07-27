@@ -197,8 +197,8 @@ def gerar_indice_html(output_dir: Path) -> str:
 <body>
   <div class="header">
     <div class="header-left">
-      <h1>Bemol — Performance SEO & Search</h1>
-      <p>Portal Executivo de Acompanhamento Mensal — Varejo, Farma & App</p>
+      <h1>Bemol | Performance SEO & Search</h1>
+      <p>Portal Executivo de Acompanhamento Mensal | Varejo, Farma & App</p>
     </div>
   </div>
   <div class="container">
