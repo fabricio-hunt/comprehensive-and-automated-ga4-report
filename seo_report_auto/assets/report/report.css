@@ -28,15 +28,17 @@ body {
 }
 
 .page {
-  width: 297mm;
-  height: 209mm;
-  padding: 12mm 16mm;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1350px;
+  height: auto;
+  min-height: auto;
+  padding: 28px 36px;
+  margin: 0 auto 32px auto;
   background: var(--bg);
   display: flex;
   flex-direction: column;
-  gap: 6mm;
-  overflow: hidden;
+  gap: 20px;
+  overflow: visible;
   page-break-after: always;
   page-break-inside: avoid;
   position: relative;
@@ -479,7 +481,87 @@ table {
   min-height: 80mm;
 }
 
+/* --- BARRA SUPERIOR DE NAVEGAÇÃO E AÇÃO (TELA) --- */
+.top-action-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.action-bar-content {
+  max-width: 1350px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.btn-download-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(21, 112, 216, 0.25);
+  font-family: "Nunito", "Inter", sans-serif;
+}
+
+.btn-download-pdf:hover {
+  background: #0f5bb5;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(21, 112, 216, 0.35);
+}
+
+/* --- ESTILOS DE IMPRESSÃO / SALVAR COMO PDF --- */
 @page {
   size: A4 landscape;
   margin: 0;
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+  body {
+    background: #fff !important;
+    margin: 0;
+    padding: 0;
+  }
+  .no-print, .top-action-bar {
+    display: none !important;
+  }
+  .report-shell {
+    width: 100%;
+  }
+  .page {
+    width: 297mm !important;
+    max-width: none !important;
+    height: 209mm !important;
+    min-height: 209mm !important;
+    padding: 10mm 14mm !important;
+    margin: 0 auto !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    page-break-after: always !important;
+    page-break-inside: avoid !important;
+    break-after: page !important;
+  }
 }
