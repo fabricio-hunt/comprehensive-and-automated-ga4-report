@@ -228,4 +228,46 @@
     yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } }, axisLabel: { formatter: numberCompact } },
     series: [{ type: 'line', smooth: true, areaStyle: { opacity: 0.16 }, symbolSize: 8, data: charts.farma_impressions_values || [], label: { show: true, position: 'top', formatter: (p) => numberCompact(p.value), color: text, fontSize: 9, backgroundColor: 'rgba(255,255,255,0.8)', padding: 2, borderRadius: 2 } }]
   });
+
+  window.filterReportYear = function (mode) {
+    const buttons = document.querySelectorAll('.btn-year-filter');
+    buttons.forEach((btn) => {
+      const filter = btn.getAttribute('data-filter');
+      if (filter === mode || (mode === 'all' && filter === 'all')) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    const yearPrev = String((charts.meta && charts.meta.ano ? charts.meta.ano - 1 : 2025));
+    const yearCurr = String((charts.meta && charts.meta.ano) || 2026);
+
+    const chartsToFilter = ['chart-sessoes-web', 'chart-receita-web', 'chart-app-receita'];
+    chartsToFilter.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el || typeof echarts === 'undefined') return;
+      const chart = echarts.getInstanceByDom(el);
+      if (!chart) return;
+
+      const selectedMap = {};
+      if (mode === 'all') {
+        selectedMap[yearPrev] = true;
+        selectedMap[yearCurr] = true;
+      } else if (mode === yearCurr || mode === 'current' || mode === '2026') {
+        selectedMap[yearPrev] = false;
+        selectedMap[yearCurr] = true;
+      } else if (mode === yearPrev || mode === 'previous' || mode === '2025') {
+        selectedMap[yearPrev] = true;
+        selectedMap[yearCurr] = false;
+      }
+
+      chart.setOption({
+        legend: {
+          selected: selectedMap,
+        },
+      });
+    });
+  };
 })();
+

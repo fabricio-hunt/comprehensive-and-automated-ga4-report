@@ -15,13 +15,14 @@ def exportar_html_para_pdf(html_path: str, pdf_path: str) -> str:
             browser = p.chromium.launch()
             page = browser.new_page(viewport={"width": 1440, "height": 1024}, device_scale_factor=1.5)
             page.goto(html_file.as_uri(), wait_until="networkidle")
-            page.wait_for_timeout(2500)
+            page.wait_for_timeout(3000)
             page.pdf(
                 path=str(pdf_file),
                 format="A4",
                 landscape=True,
                 print_background=True,
-                margin={"top": "8mm", "right": "8mm", "bottom": "8mm", "left": "8mm"},
+                prefer_css_page_size=True,
+                margin={"top": "0", "right": "0", "bottom": "0", "left": "0"},
             )
             browser.close()
     except Exception as e:

@@ -29,8 +29,16 @@ def get_credentials(client_secret_path: str):
     creds = None
 
     if TOKEN_CACHE.exists():
-        with open(TOKEN_CACHE, "rb") as f:
-            creds = pickle.load(f)
+        try:
+            with open(TOKEN_CACHE, "rb") as f:
+                creds = pickle.load(f)
+        except Exception as e:
+            print(f"[Auth] Aviso: não foi possível carregar token em cache ({e}). Um novo token será solicitado.")
+            try:
+                TOKEN_CACHE.unlink()
+            except Exception:
+                pass
+            creds = None
 
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:

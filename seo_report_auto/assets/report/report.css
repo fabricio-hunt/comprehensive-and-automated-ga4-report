@@ -504,6 +504,48 @@ table {
   font-size: 15px;
 }
 
+.action-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.year-filter-group {
+  display: inline-flex;
+  align-items: center;
+  background: #e2e8f0;
+  padding: 4px;
+  border-radius: 10px;
+  gap: 4px;
+  border: 1px solid #cbd5e1;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.btn-year-filter {
+  background: transparent;
+  color: #475569;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: "Nunito", "Inter", sans-serif;
+  white-space: nowrap;
+}
+
+.btn-year-filter:hover {
+  color: #1e293b;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.btn-year-filter.active {
+  background: #ffffff;
+  color: var(--blue);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
 .btn-download-pdf {
   display: inline-flex;
   align-items: center;
@@ -540,24 +582,24 @@ table {
   }
   body {
     background: #fff !important;
-    margin: 0;
-    padding: 0;
-    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-  .no-print, .top-action-bar {
+  .no-print, .top-action-bar, .year-filter-group {
     display: none !important;
   }
   .report-shell {
-    width: 100%;
+    width: 100% !important;
   }
   .page {
     width: 297mm !important;
     max-width: 297mm !important;
     height: 210mm !important;
     max-height: 210mm !important;
-    padding: 10mm 14mm !important;
+    padding: 8mm 12mm !important;
     margin: 0 !important;
     background: #fff !important;
     box-shadow: none !important;
@@ -566,5 +608,26 @@ table {
     page-break-after: always !important;
     page-break-inside: avoid !important;
     break-after: page !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+  }
+  .chart {
+    height: 70mm !important;
+  }
+  .chart.small {
+    height: 46mm !important;
+  }
+  .chart.tall {
+    height: 82mm !important;
+  }
+  .mini-chart {
+    height: 42mm !important;
+  }
+  .metric-card {
+    padding: 3mm 4mm !important;
+  }
+  .section-header {
+    margin-bottom: 3mm !important;
   }
 }
