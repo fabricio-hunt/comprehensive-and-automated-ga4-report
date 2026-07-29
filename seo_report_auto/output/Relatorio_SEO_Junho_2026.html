@@ -556,7 +556,7 @@ table {
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
 }
 
-.btn-download-pdf {
+.btn-share-email {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -573,10 +573,59 @@ table {
   font-family: "Nunito", "Inter", sans-serif;
 }
 
-.btn-download-pdf:hover {
+.btn-share-email:hover {
   background: #0f5bb5;
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(21, 112, 216, 0.35);
+}
+
+.btn-copy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: var(--blue);
+  border: 1.5px solid var(--blue-soft);
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: "Nunito", "Inter", sans-serif;
+}
+
+.btn-copy-link:hover {
+  background: var(--blue-soft);
+  transform: translateY(-1px);
+}
+
+.btn-copy-link.copied {
+  background: var(--green);
+  color: #ffffff;
+  border-color: var(--green);
+}
+
+.btn-download-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: "Nunito", "Inter", sans-serif;
+}
+
+.btn-download-pdf:hover {
+  background: #fff;
+  color: var(--text);
+  border-color: #cbd5e1;
 }
 
 /* --- ESTILOS DE IMPRESSÃO / SALVAR COMO PDF --- */
@@ -675,9 +724,17 @@ table {
           <button type="button" class="btn-year-filter" data-filter="2026" onclick="window.filterReportYear('2026')">Apenas 2026</button>
           <button type="button" class="btn-year-filter" data-filter="2025" onclick="window.filterReportYear('2025')">Apenas 2025</button>
         </div>
-        <button onclick="window.print()" class="btn-download-pdf" title="Salvar relatório em PDF">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          Baixar Relatório (PDF)
+        <button onclick="window.shareViaEmail('Junho', '2026')" class="btn-share-email" title="Encaminhar relatório por E-mail">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Encaminhar por E-mail
+        </button>
+        <button onclick="window.copyReportLink(this)" class="btn-copy-link" title="Copiar link online do relatório">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+          Copiar Link
+        </button>
+        <button onclick="window.print()" class="btn-download-pdf" title="Imprimir / Salvar em PDF">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Imprimir
         </button>
       </div>
     </div>
@@ -1459,7 +1516,7 @@ table {
   </div>
 
   <script>
-    window.REPORT_CHARTS = {"meta": {"ano": 2026}, "labels12": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"], "web_sessions_current": [291539.0, 236347.0, 272751.0, 250541.0, 272584.0, 263626.0, null, null, null, null, null, null], "web_sessions_previous": [358836.0, 291197.0, 310514.0, 314505.0, 338672.0, 297732.0, 315545.0, 287917.0, 280228.0, 286479.0, 310463.0, 276460.0], "web_revenue_current": [5106981.159848001, 3958250.794589, 4358840.146048, 4068881.518717999, 4669409.399867, 4576461.210042, null, null, null, null, null, null], "web_revenue_previous": [3634792.869909, 2989664.810038, 4025084.8999550003, 4029195.950076, 4441106.740159, 4083921.7798079997, 4199193.410002, 4780239.191963, 5351065.100723, 5018885.908422001, 7576675.560747, 4897347.547175001], "web_share": 22.7, "web_rps_organico": 17.36, "web_rps_total": 8.57, "index_labels": ["Jan/25", "Fev/25", "Mar/25", "Abr/25", "Mai/25", "Jun/25", "Jul/25", "Ago/25", "Set/25", "Out/25", "Nov/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26", "Ago/26", "Set/26", "Out/26", "Nov/26", "Dez/26"], "web_index_organico": [100.0, 82.3, 110.7, 110.9, 122.2, 112.4, 115.5, 131.5, 147.2, 138.1, 208.4, 134.7, 140.5, 108.9, 119.9, 111.9, 128.5, 125.9, null, null, null, null, null, null], "web_index_total": [100.0, 99.8, 107.5, 104.4, 112.8, 105.8, 123.6, 139.8, 150.1, 142.5, 221.4, 149.1, 146.0, 117.4, 135.9, 125.7, 144.8, 136.5, null, null, null, null, null, null], "web_impressions_labels": ["Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26", "Jun/26"], "web_impressions_values": [15044865, 15335213, 13188200, 16160486, 14441022, 12919632, 12291991], "app_revenue_current": [2844970.1499590003, 2404758.1401460003, 2575340.7200259995, 2246916.2798400004, 2691906.1999549996, 2202771.269998, null, null, null, null, null, null], "app_revenue_previous": [2488252.25003, 2516200.910169999, 2505722.009875, 2750478.2001239997, 3423724.999796999, 3261324.2400789987, 3429247.5298049995, 3386333.7101519997, 4301516.309865, 4626561.9698870005, 5431068.129707, 2850706.569851001], "farma_impressions_labels": ["Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26", "Jun/26"], "farma_impressions_values": [11603197, 12777688, 15095200, 18486308, 12097605, 9475222, 10439543]};
+    window.REPORT_CHARTS = {"meta": {"ano": 2026}, "labels12": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"], "web_sessions_current": [291539.0, 236347.0, 272751.0, 250541.0, 272584.0, 263626.0, null, null, null, null, null, null], "web_sessions_previous": [358836.0, 291197.0, 310514.0, 314505.0, 338672.0, 297732.0, 315545.0, 287917.0, 280228.0, 286479.0, 310463.0, 276460.0], "web_revenue_current": [5106981.159848001, 3958250.794589001, 4358840.146047999, 4068881.518718, 4669409.399867, 4576461.210042001, null, null, null, null, null, null], "web_revenue_previous": [3634792.8699089997, 2989664.8100379994, 4025084.8999550003, 4029195.950076, 4441106.740159, 4083921.7798079993, 4199193.410002, 4780239.191962999, 5351065.100723, 5018885.908422001, 7576675.560746999, 4897347.547175001], "web_share": 22.7, "web_rps_organico": 17.36, "web_rps_total": 8.57, "index_labels": ["Jan/25", "Fev/25", "Mar/25", "Abr/25", "Mai/25", "Jun/25", "Jul/25", "Ago/25", "Set/25", "Out/25", "Nov/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26", "Ago/26", "Set/26", "Out/26", "Nov/26", "Dez/26"], "web_index_organico": [100.0, 82.3, 110.7, 110.9, 122.2, 112.4, 115.5, 131.5, 147.2, 138.1, 208.4, 134.7, 140.5, 108.9, 119.9, 111.9, 128.5, 125.9, null, null, null, null, null, null], "web_index_total": [100.0, 99.8, 107.5, 104.4, 112.8, 105.8, 123.6, 139.8, 150.1, 142.5, 221.4, 149.1, 146.0, 117.4, 135.9, 125.7, 144.8, 136.5, null, null, null, null, null, null], "web_impressions_labels": ["Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26", "Jun/26"], "web_impressions_values": [15044865, 15335213, 13188200, 16160486, 14441022, 12919632, 12291991], "app_revenue_current": [2844970.149959, 2404758.140146, 2575340.7200259995, 2246916.27984, 2691906.1999549996, 2202771.269998, null, null, null, null, null, null], "app_revenue_previous": [2488252.25003, 2516200.910169999, 2505722.009875, 2750478.2001239997, 3423724.999796999, 3261324.2400789987, 3429247.5298049995, 3386333.7101519997, 4301516.309865, 4626561.9698870005, 5431068.129707, 2850706.569851001], "farma_impressions_labels": ["Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26", "Jun/26"], "farma_impressions_values": [11603197, 12777688, 15095200, 18486308, 12097605, 9475222, 10439543]};
   </script>
   <script>
     (function () {
@@ -1733,6 +1790,39 @@ table {
           selected: selectedMap,
         },
       });
+    });
+  };
+
+  // --- COMPARTILHAMENTO POR E-MAIL E LINK ---
+  window.getReportOnlineUrl = function() {
+    if (window.location.protocol === 'file:') {
+      const filename = window.location.pathname.split('/').pop() || 'Relatorio_SEO_Junho_2026.html';
+      return 'https://fabricio-hunt.github.io/comprehensive-and-automated-ga4-report/' + filename;
+    }
+    return window.location.href;
+  };
+
+  window.shareViaEmail = function(mesNome, ano) {
+    const url = window.getReportOnlineUrl();
+    const subject = `Relatório de Performance SEO — Bemol (${mesNome} / ${ano})`;
+    const body = `Olá,\n\nSegue o link para acesso ao Relatório Mensal de Performance SEO & Search (${mesNome}/${ano}):\n${url}\n\nAcesse o link para conferir os indicadores interativos, comparativos e gráficos de evolução.\n\nAtenciosamente,\nEquipe SEO Bemol`;
+    
+    const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoUrl;
+  };
+
+  window.copyReportLink = function(btnElem) {
+    const url = window.getReportOnlineUrl();
+    navigator.clipboard.writeText(url).then(() => {
+      const origText = btnElem.innerHTML;
+      btnElem.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Link copiado!`;
+      btnElem.classList.add('copied');
+      setTimeout(() => {
+        btnElem.innerHTML = origText;
+        btnElem.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      alert('Link do relatório online:\n' + url);
     });
   };
 })();

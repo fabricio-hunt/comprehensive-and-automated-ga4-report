@@ -546,7 +546,7 @@ table {
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
 }
 
-.btn-download-pdf {
+.btn-share-email {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -563,10 +563,59 @@ table {
   font-family: "Nunito", "Inter", sans-serif;
 }
 
-.btn-download-pdf:hover {
+.btn-share-email:hover {
   background: #0f5bb5;
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(21, 112, 216, 0.35);
+}
+
+.btn-copy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: var(--blue);
+  border: 1.5px solid var(--blue-soft);
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: "Nunito", "Inter", sans-serif;
+}
+
+.btn-copy-link:hover {
+  background: var(--blue-soft);
+  transform: translateY(-1px);
+}
+
+.btn-copy-link.copied {
+  background: var(--green);
+  color: #ffffff;
+  border-color: var(--green);
+}
+
+.btn-download-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: "Nunito", "Inter", sans-serif;
+}
+
+.btn-download-pdf:hover {
+  background: #fff;
+  color: var(--text);
+  border-color: #cbd5e1;
 }
 
 /* --- ESTILOS DE IMPRESSÃO / SALVAR COMO PDF --- */

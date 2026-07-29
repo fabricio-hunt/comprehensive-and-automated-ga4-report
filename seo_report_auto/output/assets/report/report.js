@@ -271,5 +271,38 @@
       });
     });
   };
+
+  // --- COMPARTILHAMENTO POR E-MAIL E LINK ---
+  window.getReportOnlineUrl = function() {
+    if (window.location.protocol === 'file:') {
+      const filename = window.location.pathname.split('/').pop() || 'Relatorio_SEO_Junho_2026.html';
+      return 'https://fabricio-hunt.github.io/comprehensive-and-automated-ga4-report/' + filename;
+    }
+    return window.location.href;
+  };
+
+  window.shareViaEmail = function(mesNome, ano) {
+    const url = window.getReportOnlineUrl();
+    const subject = `Relatório de Performance SEO — Bemol (${mesNome} / ${ano})`;
+    const body = `Olá,\n\nSegue o link para acesso ao Relatório Mensal de Performance SEO & Search (${mesNome}/${ano}):\n${url}\n\nAcesse o link para conferir os indicadores interativos, comparativos e gráficos de evolução.\n\nAtenciosamente,\nEquipe SEO Bemol`;
+    
+    const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoUrl;
+  };
+
+  window.copyReportLink = function(btnElem) {
+    const url = window.getReportOnlineUrl();
+    navigator.clipboard.writeText(url).then(() => {
+      const origText = btnElem.innerHTML;
+      btnElem.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Link copiado!`;
+      btnElem.classList.add('copied');
+      setTimeout(() => {
+        btnElem.innerHTML = origText;
+        btnElem.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      alert('Link do relatório online:\n' + url);
+    });
+  };
 })();
 
