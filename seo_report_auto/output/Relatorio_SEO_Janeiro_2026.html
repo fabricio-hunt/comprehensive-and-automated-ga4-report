@@ -514,7 +514,49 @@ table {
   font-size: 15px;
 }
 
-.btn-download-pdf {
+.action-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.year-filter-group {
+  display: inline-flex;
+  align-items: center;
+  background: #e2e8f0;
+  padding: 4px;
+  border-radius: 10px;
+  gap: 4px;
+  border: 1px solid #cbd5e1;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.btn-year-filter {
+  background: transparent;
+  color: #475569;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: "Nunito", "Inter", sans-serif;
+  white-space: nowrap;
+}
+
+.btn-year-filter:hover {
+  color: #1e293b;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.btn-year-filter.active {
+  background: #ffffff;
+  color: var(--blue);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+.btn-share-email {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -531,51 +573,182 @@ table {
   font-family: "Nunito", "Inter", sans-serif;
 }
 
-.btn-download-pdf:hover {
+.btn-share-email:hover {
   background: #0f5bb5;
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(21, 112, 216, 0.35);
 }
 
-/* --- ESTILOS DE IMPRESSÃO / SALVAR COMO PDF --- */
+.btn-copy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: var(--blue);
+  border: 1.5px solid var(--blue-soft);
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: "Nunito", "Inter", sans-serif;
+}
+
+.btn-copy-link:hover {
+  background: var(--blue-soft);
+  transform: translateY(-1px);
+}
+
+.btn-copy-link.copied {
+  background: var(--green);
+  color: #ffffff;
+  border-color: var(--green);
+}
+
+.btn-download-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: "Nunito", "Inter", sans-serif;
+}
+
+.btn-download-pdf:hover {
+  background: #fff;
+  color: var(--text);
+  border-color: #cbd5e1;
+}
+
+/* --- ESTILOS DE IMPRESSAO / SALVAR COMO PDF --- */
 @page {
   size: A4 landscape;
-  margin: 0;
+  margin: 5mm;
 }
 
 @media print {
   @page {
     size: A4 landscape;
-    margin: 0;
+    margin: 5mm;
   }
-  body {
+
+  html, body {
     background: #fff !important;
-    margin: 0;
-    padding: 0;
-    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-  .no-print, .top-action-bar {
+
+  .no-print, .top-action-bar, .year-filter-group {
     display: none !important;
   }
+
   .report-shell {
-    width: 100%;
+    width: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
+
+  /* Cada .page = 1 folha A4 paisagem                      */
+  /* 210mm - 10mm margem (5+5) = 200mm uteis de altura     */
   .page {
-    width: 297mm !important;
-    max-width: 297mm !important;
-    height: 210mm !important;
-    max-height: 210mm !important;
-    padding: 10mm 14mm !important;
+    width: 100% !important;
+    height: 200mm !important;
+    max-height: 200mm !important;
+    min-height: 200mm !important;
+    box-sizing: border-box !important;
+    padding: 4mm 6mm !important;
     margin: 0 !important;
     background: #fff !important;
     box-shadow: none !important;
     border-radius: 0 !important;
     overflow: hidden !important;
+    page-break-before: always !important;
     page-break-after: always !important;
     page-break-inside: avoid !important;
+    break-before: page !important;
     break-after: page !important;
+    break-inside: avoid !important;
+    display: block !important;
+  }
+
+  .page:first-child {
+    page-break-before: avoid !important;
+    break-before: avoid !important;
+  }
+
+  /* Evita corte de cards, grids e paineis no meio da pagina */
+  .metric-card,
+  .cards-grid-4,
+  .two-column-grid,
+  .chart-panel,
+  .split-panel,
+  .note-box,
+  .section-header,
+  table,
+  tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .page > * {
+    margin-bottom: 3mm !important;
+  }
+
+  .page > *:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Graficos: altura fixa para caber no slide, sem clipping */
+  .chart {
+    height: 58mm !important;
+    max-height: 58mm !important;
+    overflow: visible !important;
+  }
+
+  .chart.small {
+    height: 38mm !important;
+    max-height: 38mm !important;
+    overflow: visible !important;
+  }
+
+  .chart.tall {
+    height: 70mm !important;
+    max-height: 70mm !important;
+    overflow: visible !important;
+  }
+
+  .mini-chart {
+    height: 34mm !important;
+    max-height: 34mm !important;
+    overflow: visible !important;
+  }
+
+  /* SVG do ECharts: nunca clipar */
+  .chart svg, .mini-chart svg {
+    width: 100% !important;
+    height: 100% !important;
+    overflow: visible !important;
+  }
+
+  .metric-card {
+    padding: 3mm 4mm !important;
+  }
+
+  .section-header {
+    margin-bottom: 2mm !important;
   }
 }
 
@@ -586,10 +759,25 @@ table {
   <div class="top-action-bar no-print">
     <div class="action-bar-content">
       <span>Relatório de Performance SEO | Janeiro / 2026</span>
-      <button onclick="window.print()" class="btn-download-pdf" title="Salvar relatório em PDF">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-        Baixar Relatório (PDF)
-      </button>
+      <div class="action-bar-right">
+        <div class="year-filter-group no-print" role="group" aria-label="Filtro de Ano">
+          <button type="button" class="btn-year-filter active" data-filter="all" onclick="window.filterReportYear('all')">Comparativo (2025 vs 2026)</button>
+          <button type="button" class="btn-year-filter" data-filter="2026" onclick="window.filterReportYear('2026')">Apenas 2026</button>
+          <button type="button" class="btn-year-filter" data-filter="2025" onclick="window.filterReportYear('2025')">Apenas 2025</button>
+        </div>
+        <button onclick="window.shareViaEmail('Janeiro', '2026')" class="btn-share-email" title="Encaminhar relatório por E-mail">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Encaminhar por E-mail
+        </button>
+        <button onclick="window.copyReportLink(this)" class="btn-copy-link" title="Copiar link online do relatório">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+          Copiar Link
+        </button>
+        <button onclick="window.print()" class="btn-download-pdf" title="Imprimir / Salvar em PDF">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Imprimir
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1369,7 +1557,7 @@ table {
   </div>
 
   <script>
-    window.REPORT_CHARTS = {"meta": {"ano": 2026}, "labels12": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"], "web_sessions_current": [291539.0, null, null, null, null, null, null, null, null, null, null, null], "web_sessions_previous": [358836.0, 291197.0, 310514.0, 314505.0, 338672.0, 297732.0, 315545.0, 287917.0, 280228.0, 286479.0, 310463.0, 276460.0], "web_revenue_current": [5106981.159847999, null, null, null, null, null, null, null, null, null, null, null], "web_revenue_previous": [3634792.869909, 2989664.8100379994, 4025084.899955, 4029195.950076, 4441106.740159001, 4083921.7798080007, 4199193.410002001, 4780239.191963, 5351065.100723001, 5018885.908422001, 7576675.560747, 4897347.547174998], "web_share": 23.7, "web_rps_organico": 17.52, "web_rps_total": 8.14, "index_labels": ["Jan/25", "Fev/25", "Mar/25", "Abr/25", "Mai/25", "Jun/25", "Jul/25", "Ago/25", "Set/25", "Out/25", "Nov/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26", "Ago/26", "Set/26", "Out/26", "Nov/26", "Dez/26"], "web_index_organico": [100.0, 82.3, 110.7, 110.9, 122.2, 112.4, 115.5, 131.5, 147.2, 138.1, 208.4, 134.7, 140.5, null, null, null, null, null, null, null, null, null, null, null], "web_index_total": [100.0, 99.8, 107.5, 104.4, 112.8, 105.8, 123.6, 139.8, 150.1, 142.5, 221.4, 149.1, 146.0, null, null, null, null, null, null, null, null, null, null, null], "web_impressions_labels": ["Jul/25", "Aug/25", "Sep/25", "Oct/25", "Nov/25", "Dec/25", "Jan/26"], "web_impressions_values": [10056565, 15254030, 15735801, 17505323, 20407939, 15044865, 15335213], "app_revenue_current": [2844970.1499590008, null, null, null, null, null, null, null, null, null, null, null], "app_revenue_previous": [2488252.2500299998, 2516200.9101699996, 2505722.009875, 2750478.200124, 3423724.999797, 3261324.2400789997, 3429247.5298049995, 3386333.710152, 4301516.309865, 4626561.969887001, 5431068.129707001, 2850706.569851001], "farma_impressions_labels": ["Jul/25", "Aug/25", "Sep/25", "Oct/25", "Nov/25", "Dec/25", "Jan/26"], "farma_impressions_values": [12278112, 10577382, 8630545, 8727960, 11349486, 11603197, 12777688]};
+    window.REPORT_CHARTS = {"meta": {"ano": 2026}, "labels12": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"], "web_sessions_current": [291539.0, null, null, null, null, null, null, null, null, null, null, null], "web_sessions_previous": [358836.0, 291197.0, 310514.0, 314505.0, 338672.0, 297732.0, 315545.0, 287917.0, 280228.0, 286479.0, 310463.0, 276460.0], "web_revenue_current": [5106981.159848, null, null, null, null, null, null, null, null, null, null, null], "web_revenue_previous": [3634792.869909, 2989664.8100379994, 4025084.8999550003, 4029195.950076, 4441106.740159, 4083921.7798080007, 4199193.410002, 4780239.191962999, 5351065.100723, 5018885.908422001, 7576675.560747, 4897347.5471749995], "web_share": 23.7, "web_rps_organico": 17.52, "web_rps_total": 8.14, "index_labels": ["Jan/25", "Fev/25", "Mar/25", "Abr/25", "Mai/25", "Jun/25", "Jul/25", "Ago/25", "Set/25", "Out/25", "Nov/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26", "Ago/26", "Set/26", "Out/26", "Nov/26", "Dez/26"], "web_index_organico": [100.0, 82.3, 110.7, 110.9, 122.2, 112.4, 115.5, 131.5, 147.2, 138.1, 208.4, 134.7, 140.5, null, null, null, null, null, null, null, null, null, null, null], "web_index_total": [100.0, 99.8, 107.5, 104.4, 112.8, 105.8, 123.6, 139.8, 150.1, 142.5, 221.4, 149.1, 146.0, null, null, null, null, null, null, null, null, null, null, null], "web_impressions_labels": ["Jul/25", "Aug/25", "Sep/25", "Oct/25", "Nov/25", "Dec/25", "Jan/26"], "web_impressions_values": [10056565, 15254030, 15735801, 17505323, 20407939, 15044865, 15335213], "app_revenue_current": [2844970.1499590003, null, null, null, null, null, null, null, null, null, null, null], "app_revenue_previous": [2488252.25003, 2516200.91017, 2505722.0098750005, 2750478.2001240007, 3423724.9997970015, 3261324.2400789997, 3429247.529805, 3386333.710152, 4301516.309865001, 4626561.9698870005, 5431068.129706999, 2850706.569851001], "farma_impressions_labels": ["Jul/25", "Aug/25", "Sep/25", "Oct/25", "Nov/25", "Dec/25", "Jan/26"], "farma_impressions_values": [12278112, 10577382, 8630545, 8727960, 11349486, 11603197, 12777688]};
   </script>
   <script>
     (function () {
@@ -1394,13 +1582,30 @@ table {
     return String(Math.round(value));
   }
 
+  // Registro global de instancias ECharts para resize no beforeprint
+  const _chartInstances = {};
+
   function createChart(id, option) {
     const element = document.getElementById(id);
     if (!element || typeof echarts === 'undefined') return;
     const chart = echarts.init(element, null, { renderer: 'svg' });
     chart.setOption(option);
+    _chartInstances[id] = chart;
     window.addEventListener('resize', () => chart.resize());
   }
+
+  // Redimensiona todos os graficos ao entrar em modo de impressao
+  // (Ctrl+P, window.print(), ou qualquer impressora/PDF do SO)
+  const _printMql = window.matchMedia('print');
+  function _resizeAllCharts() {
+    Object.values(_chartInstances).forEach(function(c) {
+      try { c.resize(); } catch(e) {}
+    });
+  }
+  if (_printMql.addEventListener) {
+    _printMql.addEventListener('change', function(e) { if (e.matches) _resizeAllCharts(); });
+  }
+  window.addEventListener('beforeprint', _resizeAllCharts);
 
   const labels12 = charts.labels12 || ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
@@ -1461,7 +1666,8 @@ table {
         symbolSize: 6,
         lineStyle: { width: 2, type: 'dashed' },
         itemStyle: { color: gray, borderColor: '#FFFFFF', borderWidth: 1 },
-        data: charts.web_revenue_previous || []
+        data: charts.web_revenue_previous || [],
+        label: { show: true, position: 'bottom', formatter: (p) => currencyCompact(p.value), color: muted, fontSize: 9, backgroundColor: 'rgba(255,255,255,0.7)', borderRadius: 2, padding: 2 }
       },
       {
         name: String((charts.meta && charts.meta.ano) || 2026),
@@ -1520,7 +1726,7 @@ table {
     yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } } },
     series: [
       { name: 'Receita orgânica', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 3 }, data: charts.web_index_organico || [], label: { show: true, position: 'top', color: text, fontSize: 8, backgroundColor: 'rgba(255,255,255,0.7)', padding: 1 } },
-      { name: 'Receita total', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 2, type: 'dashed' }, data: charts.web_index_total || [] }
+      { name: 'Receita total', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 2, type: 'dashed' }, data: charts.web_index_total || [], label: { show: true, position: 'bottom', color: muted, fontSize: 8, backgroundColor: 'rgba(255,255,255,0.7)', padding: 1 } }
     ]
   });
 
@@ -1577,7 +1783,8 @@ table {
         symbolSize: 6,
         lineStyle: { width: 2, type: 'dashed' },
         itemStyle: { color: gray, borderColor: '#FFFFFF', borderWidth: 1 },
-        data: charts.app_revenue_previous || []
+        data: charts.app_revenue_previous || [],
+        label: { show: true, position: 'bottom', formatter: (p) => currencyCompact(p.value), color: muted, fontSize: 9, backgroundColor: 'rgba(255,255,255,0.7)', borderRadius: 2, padding: 2 }
       },
       {
         name: String((charts.meta && charts.meta.ano) || 2026),
@@ -1602,7 +1809,82 @@ table {
     yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } }, axisLabel: { formatter: numberCompact } },
     series: [{ type: 'line', smooth: true, areaStyle: { opacity: 0.16 }, symbolSize: 8, data: charts.farma_impressions_values || [], label: { show: true, position: 'top', formatter: (p) => numberCompact(p.value), color: text, fontSize: 9, backgroundColor: 'rgba(255,255,255,0.8)', padding: 2, borderRadius: 2 } }]
   });
+
+  window.filterReportYear = function (mode) {
+    const buttons = document.querySelectorAll('.btn-year-filter');
+    buttons.forEach((btn) => {
+      const filter = btn.getAttribute('data-filter');
+      if (filter === mode || (mode === 'all' && filter === 'all')) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    const yearPrev = String((charts.meta && charts.meta.ano ? charts.meta.ano - 1 : 2025));
+    const yearCurr = String((charts.meta && charts.meta.ano) || 2026);
+
+    const chartsToFilter = ['chart-sessoes-web', 'chart-receita-web', 'chart-app-receita'];
+    chartsToFilter.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el || typeof echarts === 'undefined') return;
+      const chart = echarts.getInstanceByDom(el);
+      if (!chart) return;
+
+      const selectedMap = {};
+      if (mode === 'all') {
+        selectedMap[yearPrev] = true;
+        selectedMap[yearCurr] = true;
+      } else if (mode === yearCurr || mode === 'current' || mode === '2026') {
+        selectedMap[yearPrev] = false;
+        selectedMap[yearCurr] = true;
+      } else if (mode === yearPrev || mode === 'previous' || mode === '2025') {
+        selectedMap[yearPrev] = true;
+        selectedMap[yearCurr] = false;
+      }
+
+      chart.setOption({
+        legend: {
+          selected: selectedMap,
+        },
+      });
+    });
+  };
+
+  // --- COMPARTILHAMENTO POR E-MAIL E LINK ---
+  window.getReportOnlineUrl = function() {
+    if (window.location.protocol === 'file:') {
+      const filename = window.location.pathname.split('/').pop() || 'Relatorio_SEO_Junho_2026.html';
+      return 'https://fabricio-hunt.github.io/comprehensive-and-automated-ga4-report/' + filename;
+    }
+    return window.location.href;
+  };
+
+  window.shareViaEmail = function(mesNome, ano) {
+    const url = window.getReportOnlineUrl();
+    const subject = `Relatório de Performance SEO — Bemol (${mesNome} / ${ano})`;
+    const body = `Olá,\n\nSegue o link para acesso ao Relatório Mensal de Performance SEO & Search (${mesNome}/${ano}):\n${url}\n\nAcesse o link para conferir os indicadores interativos, comparativos e gráficos de evolução.\n\nAtenciosamente,\nEquipe SEO Bemol`;
+    
+    const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoUrl;
+  };
+
+  window.copyReportLink = function(btnElem) {
+    const url = window.getReportOnlineUrl();
+    navigator.clipboard.writeText(url).then(() => {
+      const origText = btnElem.innerHTML;
+      btnElem.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Link copiado!`;
+      btnElem.classList.add('copied');
+      setTimeout(() => {
+        btnElem.innerHTML = origText;
+        btnElem.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      alert('Link do relatório online:\n' + url);
+    });
+  };
 })();
+
 
   </script>
 </body>
