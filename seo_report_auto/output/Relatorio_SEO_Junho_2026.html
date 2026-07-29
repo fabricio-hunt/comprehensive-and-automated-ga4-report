@@ -590,11 +590,12 @@ table {
     size: A4 landscape;
     margin: 0;
   }
-  body {
+  html, body {
     background: #fff !important;
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
+    height: 100% !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -603,13 +604,15 @@ table {
   }
   .report-shell {
     width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   .page {
-    width: 297mm !important;
-    max-width: 297mm !important;
-    height: 210mm !important;
-    max-height: 210mm !important;
-    padding: 8mm 12mm !important;
+    width: 100% !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    box-sizing: border-box !important;
+    padding: 6mm 10mm !important;
     margin: 0 !important;
     background: #fff !important;
     box-shadow: none !important;
@@ -618,27 +621,32 @@ table {
     page-break-after: always !important;
     page-break-inside: avoid !important;
     break-after: page !important;
+    break-inside: avoid !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-start !important;
+    justify-content: space-between !important;
   }
   .chart {
-    height: 70mm !important;
+    height: 62mm !important;
+    max-height: 30vh !important;
   }
   .chart.small {
-    height: 46mm !important;
+    height: 42mm !important;
+    max-height: 22vh !important;
   }
   .chart.tall {
-    height: 82mm !important;
+    height: 74mm !important;
+    max-height: 38vh !important;
   }
   .mini-chart {
-    height: 42mm !important;
+    height: 36mm !important;
+    max-height: 18vh !important;
   }
   .metric-card {
     padding: 3mm 4mm !important;
   }
   .section-header {
-    margin-bottom: 3mm !important;
+    margin-bottom: 2mm !important;
   }
 }
 
@@ -1439,7 +1447,7 @@ table {
   </div>
 
   <script>
-    window.REPORT_CHARTS = {"meta": {"ano": 2026}, "labels12": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"], "web_sessions_current": [291539.0, 236347.0, 272751.0, 250541.0, 272584.0, 263626.0, null, null, null, null, null, null], "web_sessions_previous": [358836.0, 291197.0, 310514.0, 314505.0, 338672.0, 297732.0, 315545.0, 287917.0, 280228.0, 286479.0, 310463.0, 276460.0], "web_revenue_current": [5106981.159848001, 3958250.794589001, 4358840.146047999, 4068881.518717999, 4669409.399867, 4576461.210042001, null, null, null, null, null, null], "web_revenue_previous": [3634792.869909, 2989664.810038, 4025084.8999550003, 4029195.950076, 4441106.740159, 4083921.7798079997, 4199193.410002, 4780239.191963, 5351065.100723, 5018885.908422, 7576675.560747001, 4897347.547175001], "web_share": 22.7, "web_rps_organico": 17.36, "web_rps_total": 8.57, "index_labels": ["Jan/25", "Fev/25", "Mar/25", "Abr/25", "Mai/25", "Jun/25", "Jul/25", "Ago/25", "Set/25", "Out/25", "Nov/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26", "Ago/26", "Set/26", "Out/26", "Nov/26", "Dez/26"], "web_index_organico": [100.0, 82.3, 110.7, 110.9, 122.2, 112.4, 115.5, 131.5, 147.2, 138.1, 208.4, 134.7, 140.5, 108.9, 119.9, 111.9, 128.5, 125.9, null, null, null, null, null, null], "web_index_total": [100.0, 99.8, 107.5, 104.4, 112.8, 105.8, 123.6, 139.8, 150.1, 142.5, 221.4, 149.1, 146.0, 117.4, 135.9, 125.7, 144.8, 136.5, null, null, null, null, null, null], "web_impressions_labels": ["Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26", "Jun/26"], "web_impressions_values": [15044865, 15335213, 13188200, 16160486, 14441022, 12919632, 12291991], "app_revenue_current": [2844970.1499590003, 2404758.140146, 2575340.7200259995, 2246916.2798400004, 2691906.1999549996, 2202771.269998, null, null, null, null, null, null], "app_revenue_previous": [2488252.2500300007, 2516200.9101699996, 2505722.009875, 2750478.2001239997, 3423724.999796999, 3261324.2400789987, 3429247.5298049995, 3386333.7101519997, 4301516.309865, 4626561.9698870005, 5431068.129706999, 2850706.569851001], "farma_impressions_labels": ["Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26", "Jun/26"], "farma_impressions_values": [11603197, 12777688, 15095200, 18486308, 12097605, 9475222, 10439543]};
+    window.REPORT_CHARTS = {"meta": {"ano": 2026}, "labels12": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"], "web_sessions_current": [291539.0, 236347.0, 272751.0, 250541.0, 272584.0, 263626.0, null, null, null, null, null, null], "web_sessions_previous": [358836.0, 291197.0, 310514.0, 314505.0, 338672.0, 297732.0, 315545.0, 287917.0, 280228.0, 286479.0, 310463.0, 276460.0], "web_revenue_current": [5106981.159848001, 3958250.794589001, 4358840.146047999, 4068881.518717999, 4669409.399866999, 4576461.210042, null, null, null, null, null, null], "web_revenue_previous": [3634792.869909, 2989664.810038, 4025084.8999550003, 4029195.950076, 4441106.740159, 4083921.7798079997, 4199193.410002, 4780239.191963, 5351065.100723, 5018885.908422, 7576675.560747001, 4897347.547175001], "web_share": 22.7, "web_rps_organico": 17.36, "web_rps_total": 8.57, "index_labels": ["Jan/25", "Fev/25", "Mar/25", "Abr/25", "Mai/25", "Jun/25", "Jul/25", "Ago/25", "Set/25", "Out/25", "Nov/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26", "Ago/26", "Set/26", "Out/26", "Nov/26", "Dez/26"], "web_index_organico": [100.0, 82.3, 110.7, 110.9, 122.2, 112.4, 115.5, 131.5, 147.2, 138.1, 208.4, 134.7, 140.5, 108.9, 119.9, 111.9, 128.5, 125.9, null, null, null, null, null, null], "web_index_total": [100.0, 99.8, 107.5, 104.4, 112.8, 105.8, 123.6, 139.8, 150.1, 142.5, 221.4, 149.1, 146.0, 117.4, 135.9, 125.7, 144.8, 136.5, null, null, null, null, null, null], "web_impressions_labels": ["Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26", "Jun/26"], "web_impressions_values": [15044865, 15335213, 13188200, 16160486, 14441022, 12919632, 12291991], "app_revenue_current": [2844970.149959, 2404758.140146, 2575340.7200259995, 2246916.27984, 2691906.1999549996, 2202771.269998, null, null, null, null, null, null], "app_revenue_previous": [2488252.25003, 2516200.910169999, 2505722.009875, 2750478.2001239997, 3423724.999796999, 3261324.2400789987, 3429247.5298049995, 3386333.7101519997, 4301516.309865, 4626561.9698870005, 5431068.129707, 2850706.569851001], "farma_impressions_labels": ["Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26", "Jun/26"], "farma_impressions_values": [11603197, 12777688, 15095200, 18486308, 12097605, 9475222, 10439543]};
   </script>
   <script>
     (function () {
@@ -1531,7 +1539,8 @@ table {
         symbolSize: 6,
         lineStyle: { width: 2, type: 'dashed' },
         itemStyle: { color: gray, borderColor: '#FFFFFF', borderWidth: 1 },
-        data: charts.web_revenue_previous || []
+        data: charts.web_revenue_previous || [],
+        label: { show: true, position: 'bottom', formatter: (p) => currencyCompact(p.value), color: muted, fontSize: 9, backgroundColor: 'rgba(255,255,255,0.7)', borderRadius: 2, padding: 2 }
       },
       {
         name: String((charts.meta && charts.meta.ano) || 2026),
@@ -1590,7 +1599,7 @@ table {
     yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } } },
     series: [
       { name: 'Receita orgânica', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 3 }, data: charts.web_index_organico || [], label: { show: true, position: 'top', color: text, fontSize: 8, backgroundColor: 'rgba(255,255,255,0.7)', padding: 1 } },
-      { name: 'Receita total', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 2, type: 'dashed' }, data: charts.web_index_total || [] }
+      { name: 'Receita total', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 2, type: 'dashed' }, data: charts.web_index_total || [], label: { show: true, position: 'bottom', color: muted, fontSize: 8, backgroundColor: 'rgba(255,255,255,0.7)', padding: 1 } }
     ]
   });
 
@@ -1647,7 +1656,8 @@ table {
         symbolSize: 6,
         lineStyle: { width: 2, type: 'dashed' },
         itemStyle: { color: gray, borderColor: '#FFFFFF', borderWidth: 1 },
-        data: charts.app_revenue_previous || []
+        data: charts.app_revenue_previous || [],
+        label: { show: true, position: 'bottom', formatter: (p) => currencyCompact(p.value), color: muted, fontSize: 9, backgroundColor: 'rgba(255,255,255,0.7)', borderRadius: 2, padding: 2 }
       },
       {
         name: String((charts.meta && charts.meta.ano) || 2026),

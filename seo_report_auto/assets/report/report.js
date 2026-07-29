@@ -87,7 +87,8 @@
         symbolSize: 6,
         lineStyle: { width: 2, type: 'dashed' },
         itemStyle: { color: gray, borderColor: '#FFFFFF', borderWidth: 1 },
-        data: charts.web_revenue_previous || []
+        data: charts.web_revenue_previous || [],
+        label: { show: true, position: 'bottom', formatter: (p) => currencyCompact(p.value), color: muted, fontSize: 9, backgroundColor: 'rgba(255,255,255,0.7)', borderRadius: 2, padding: 2 }
       },
       {
         name: String((charts.meta && charts.meta.ano) || 2026),
@@ -146,7 +147,7 @@
     yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } } },
     series: [
       { name: 'Receita orgânica', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 3 }, data: charts.web_index_organico || [], label: { show: true, position: 'top', color: text, fontSize: 8, backgroundColor: 'rgba(255,255,255,0.7)', padding: 1 } },
-      { name: 'Receita total', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 2, type: 'dashed' }, data: charts.web_index_total || [] }
+      { name: 'Receita total', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 2, type: 'dashed' }, data: charts.web_index_total || [], label: { show: true, position: 'bottom', color: muted, fontSize: 8, backgroundColor: 'rgba(255,255,255,0.7)', padding: 1 } }
     ]
   });
 
@@ -203,7 +204,8 @@
         symbolSize: 6,
         lineStyle: { width: 2, type: 'dashed' },
         itemStyle: { color: gray, borderColor: '#FFFFFF', borderWidth: 1 },
-        data: charts.app_revenue_previous || []
+        data: charts.app_revenue_previous || [],
+        label: { show: true, position: 'bottom', formatter: (p) => currencyCompact(p.value), color: muted, fontSize: 9, backgroundColor: 'rgba(255,255,255,0.7)', borderRadius: 2, padding: 2 }
       },
       {
         name: String((charts.meta && charts.meta.ano) || 2026),

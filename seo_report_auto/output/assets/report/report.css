@@ -580,11 +580,12 @@ table {
     size: A4 landscape;
     margin: 0;
   }
-  body {
+  html, body {
     background: #fff !important;
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
+    height: 100% !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -593,13 +594,15 @@ table {
   }
   .report-shell {
     width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   .page {
-    width: 297mm !important;
-    max-width: 297mm !important;
-    height: 210mm !important;
-    max-height: 210mm !important;
-    padding: 8mm 12mm !important;
+    width: 100% !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    box-sizing: border-box !important;
+    padding: 6mm 10mm !important;
     margin: 0 !important;
     background: #fff !important;
     box-shadow: none !important;
@@ -608,26 +611,31 @@ table {
     page-break-after: always !important;
     page-break-inside: avoid !important;
     break-after: page !important;
+    break-inside: avoid !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-start !important;
+    justify-content: space-between !important;
   }
   .chart {
-    height: 70mm !important;
+    height: 62mm !important;
+    max-height: 30vh !important;
   }
   .chart.small {
-    height: 46mm !important;
+    height: 42mm !important;
+    max-height: 22vh !important;
   }
   .chart.tall {
-    height: 82mm !important;
+    height: 74mm !important;
+    max-height: 38vh !important;
   }
   .mini-chart {
-    height: 42mm !important;
+    height: 36mm !important;
+    max-height: 18vh !important;
   }
   .metric-card {
     padding: 3mm 4mm !important;
   }
   .section-header {
-    margin-bottom: 3mm !important;
+    margin-bottom: 2mm !important;
   }
 }
