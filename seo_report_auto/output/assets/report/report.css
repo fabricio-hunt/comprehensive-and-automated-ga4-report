@@ -618,10 +618,10 @@ table {
   border-color: #cbd5e1;
 }
 
-/* --- ESTILOS DE IMPRESSÃO / SALVAR COMO PDF --- */
+/* --- ESTILOS DE IMPRESSAO / SALVAR COMO PDF --- */
 @page {
   size: A4 landscape;
-  margin: 0;
+  margin: 5mm;
 }
 
 @media print {
@@ -629,6 +629,7 @@ table {
     size: A4 landscape;
     margin: 5mm;
   }
+
   html, body {
     background: #fff !important;
     margin: 0 !important;
@@ -638,23 +639,28 @@ table {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
+
   .no-print, .top-action-bar, .year-filter-group {
     display: none !important;
   }
+
   .report-shell {
     width: 100% !important;
     display: block !important;
     margin: 0 !important;
     padding: 0 !important;
   }
+
+  /* Cada .page = 1 folha A4 paisagem                      */
+  /* 210mm - 10mm margem (5+5) = 200mm uteis de altura     */
   .page {
     width: 100% !important;
-    height: 188mm !important;
-    max-height: 188mm !important;
-    min-height: 188mm !important;
+    height: 200mm !important;
+    max-height: 200mm !important;
+    min-height: 200mm !important;
     box-sizing: border-box !important;
-    padding: 6mm 10mm !important;
-    margin: 0 0 10mm 0 !important;
+    padding: 4mm 6mm !important;
+    margin: 0 !important;
     background: #fff !important;
     box-shadow: none !important;
     border-radius: 0 !important;
@@ -667,35 +673,70 @@ table {
     break-inside: avoid !important;
     display: block !important;
   }
+
   .page:first-child {
     page-break-before: avoid !important;
     break-before: avoid !important;
   }
-  .page > * {
-    margin-bottom: 4mm !important;
+
+  /* Evita corte de cards, grids e paineis no meio da pagina */
+  .metric-card,
+  .cards-grid-4,
+  .two-column-grid,
+  .chart-panel,
+  .split-panel,
+  .note-box,
+  .section-header,
+  table,
+  tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
+
+  .page > * {
+    margin-bottom: 3mm !important;
+  }
+
   .page > *:last-child {
     margin-bottom: 0 !important;
   }
+
+  /* Graficos: altura fixa para caber no slide, sem clipping */
   .chart {
-    height: 60mm !important;
-    max-height: 60mm !important;
+    height: 58mm !important;
+    max-height: 58mm !important;
+    overflow: visible !important;
   }
+
   .chart.small {
-    height: 40mm !important;
-    max-height: 40mm !important;
+    height: 38mm !important;
+    max-height: 38mm !important;
+    overflow: visible !important;
   }
+
   .chart.tall {
-    height: 72mm !important;
-    max-height: 72mm !important;
+    height: 70mm !important;
+    max-height: 70mm !important;
+    overflow: visible !important;
   }
+
   .mini-chart {
-    height: 35mm !important;
-    max-height: 35mm !important;
+    height: 34mm !important;
+    max-height: 34mm !important;
+    overflow: visible !important;
   }
+
+  /* SVG do ECharts: nunca clipar */
+  .chart svg, .mini-chart svg {
+    width: 100% !important;
+    height: 100% !important;
+    overflow: visible !important;
+  }
+
   .metric-card {
     padding: 3mm 4mm !important;
   }
+
   .section-header {
     margin-bottom: 2mm !important;
   }

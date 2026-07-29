@@ -20,13 +20,30 @@
     return String(Math.round(value));
   }
 
+  // Registro global de instancias ECharts para resize no beforeprint
+  const _chartInstances = {};
+
   function createChart(id, option) {
     const element = document.getElementById(id);
     if (!element || typeof echarts === 'undefined') return;
     const chart = echarts.init(element, null, { renderer: 'svg' });
     chart.setOption(option);
+    _chartInstances[id] = chart;
     window.addEventListener('resize', () => chart.resize());
   }
+
+  // Redimensiona todos os graficos ao entrar em modo de impressao
+  // (Ctrl+P, window.print(), ou qualquer impressora/PDF do SO)
+  const _printMql = window.matchMedia('print');
+  function _resizeAllCharts() {
+    Object.values(_chartInstances).forEach(function(c) {
+      try { c.resize(); } catch(e) {}
+    });
+  }
+  if (_printMql.addEventListener) {
+    _printMql.addEventListener('change', function(e) { if (e.matches) _resizeAllCharts(); });
+  }
+  window.addEventListener('beforeprint', _resizeAllCharts);
 
   const labels12 = charts.labels12 || ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 

@@ -628,10 +628,10 @@ table {
   border-color: #cbd5e1;
 }
 
-/* --- ESTILOS DE IMPRESSÃO / SALVAR COMO PDF --- */
+/* --- ESTILOS DE IMPRESSAO / SALVAR COMO PDF --- */
 @page {
   size: A4 landscape;
-  margin: 0;
+  margin: 5mm;
 }
 
 @media print {
@@ -639,6 +639,7 @@ table {
     size: A4 landscape;
     margin: 5mm;
   }
+
   html, body {
     background: #fff !important;
     margin: 0 !important;
@@ -648,23 +649,28 @@ table {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
+
   .no-print, .top-action-bar, .year-filter-group {
     display: none !important;
   }
+
   .report-shell {
     width: 100% !important;
     display: block !important;
     margin: 0 !important;
     padding: 0 !important;
   }
+
+  /* Cada .page = 1 folha A4 paisagem                      */
+  /* 210mm - 10mm margem (5+5) = 200mm uteis de altura     */
   .page {
     width: 100% !important;
-    height: 188mm !important;
-    max-height: 188mm !important;
-    min-height: 188mm !important;
+    height: 200mm !important;
+    max-height: 200mm !important;
+    min-height: 200mm !important;
     box-sizing: border-box !important;
-    padding: 6mm 10mm !important;
-    margin: 0 0 10mm 0 !important;
+    padding: 4mm 6mm !important;
+    margin: 0 !important;
     background: #fff !important;
     box-shadow: none !important;
     border-radius: 0 !important;
@@ -677,35 +683,70 @@ table {
     break-inside: avoid !important;
     display: block !important;
   }
+
   .page:first-child {
     page-break-before: avoid !important;
     break-before: avoid !important;
   }
-  .page > * {
-    margin-bottom: 4mm !important;
+
+  /* Evita corte de cards, grids e paineis no meio da pagina */
+  .metric-card,
+  .cards-grid-4,
+  .two-column-grid,
+  .chart-panel,
+  .split-panel,
+  .note-box,
+  .section-header,
+  table,
+  tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
+
+  .page > * {
+    margin-bottom: 3mm !important;
+  }
+
   .page > *:last-child {
     margin-bottom: 0 !important;
   }
+
+  /* Graficos: altura fixa para caber no slide, sem clipping */
   .chart {
-    height: 60mm !important;
-    max-height: 60mm !important;
+    height: 58mm !important;
+    max-height: 58mm !important;
+    overflow: visible !important;
   }
+
   .chart.small {
-    height: 40mm !important;
-    max-height: 40mm !important;
+    height: 38mm !important;
+    max-height: 38mm !important;
+    overflow: visible !important;
   }
+
   .chart.tall {
-    height: 72mm !important;
-    max-height: 72mm !important;
+    height: 70mm !important;
+    max-height: 70mm !important;
+    overflow: visible !important;
   }
+
   .mini-chart {
-    height: 35mm !important;
-    max-height: 35mm !important;
+    height: 34mm !important;
+    max-height: 34mm !important;
+    overflow: visible !important;
   }
+
+  /* SVG do ECharts: nunca clipar */
+  .chart svg, .mini-chart svg {
+    width: 100% !important;
+    height: 100% !important;
+    overflow: visible !important;
+  }
+
   .metric-card {
     padding: 3mm 4mm !important;
   }
+
   .section-header {
     margin-bottom: 2mm !important;
   }
@@ -1516,7 +1557,7 @@ table {
   </div>
 
   <script>
-    window.REPORT_CHARTS = {"meta": {"ano": 2026}, "labels12": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"], "web_sessions_current": [291539.0, 236347.0, 272751.0, 250541.0, 272584.0, 263626.0, null, null, null, null, null, null], "web_sessions_previous": [358836.0, 291197.0, 310514.0, 314505.0, 338672.0, 297732.0, 315545.0, 287917.0, 280228.0, 286479.0, 310463.0, 276460.0], "web_revenue_current": [5106981.159848001, 3958250.794589001, 4358840.146047999, 4068881.518718, 4669409.399867, 4576461.210042001, null, null, null, null, null, null], "web_revenue_previous": [3634792.8699089997, 2989664.8100379994, 4025084.8999550003, 4029195.950076, 4441106.740159, 4083921.7798079993, 4199193.410002, 4780239.191962999, 5351065.100723, 5018885.908422001, 7576675.560746999, 4897347.547175001], "web_share": 22.7, "web_rps_organico": 17.36, "web_rps_total": 8.57, "index_labels": ["Jan/25", "Fev/25", "Mar/25", "Abr/25", "Mai/25", "Jun/25", "Jul/25", "Ago/25", "Set/25", "Out/25", "Nov/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26", "Ago/26", "Set/26", "Out/26", "Nov/26", "Dez/26"], "web_index_organico": [100.0, 82.3, 110.7, 110.9, 122.2, 112.4, 115.5, 131.5, 147.2, 138.1, 208.4, 134.7, 140.5, 108.9, 119.9, 111.9, 128.5, 125.9, null, null, null, null, null, null], "web_index_total": [100.0, 99.8, 107.5, 104.4, 112.8, 105.8, 123.6, 139.8, 150.1, 142.5, 221.4, 149.1, 146.0, 117.4, 135.9, 125.7, 144.8, 136.5, null, null, null, null, null, null], "web_impressions_labels": ["Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26", "Jun/26"], "web_impressions_values": [15044865, 15335213, 13188200, 16160486, 14441022, 12919632, 12291991], "app_revenue_current": [2844970.149959, 2404758.140146, 2575340.7200259995, 2246916.27984, 2691906.1999549996, 2202771.269998, null, null, null, null, null, null], "app_revenue_previous": [2488252.25003, 2516200.910169999, 2505722.009875, 2750478.2001239997, 3423724.999796999, 3261324.2400789987, 3429247.5298049995, 3386333.7101519997, 4301516.309865, 4626561.9698870005, 5431068.129707, 2850706.569851001], "farma_impressions_labels": ["Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26", "Jun/26"], "farma_impressions_values": [11603197, 12777688, 15095200, 18486308, 12097605, 9475222, 10439543]};
+    window.REPORT_CHARTS = {"meta": {"ano": 2026}, "labels12": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"], "web_sessions_current": [291539.0, 236347.0, 272751.0, 250541.0, 272584.0, 263626.0, null, null, null, null, null, null], "web_sessions_previous": [358836.0, 291197.0, 310514.0, 314505.0, 338672.0, 297732.0, 315545.0, 287917.0, 280228.0, 286479.0, 310463.0, 276460.0], "web_revenue_current": [5106981.159848, 3958250.794589, 4358840.146048, 4068881.518718, 4669409.399866998, 4576461.210042, null, null, null, null, null, null], "web_revenue_previous": [3634792.8699089987, 2989664.8100379994, 4025084.8999550003, 4029195.9500760003, 4441106.740158999, 4083921.7798080007, 4199193.410002, 4780239.191962999, 5351065.100723001, 5018885.908422001, 7576675.560747001, 4897347.547175001], "web_share": 22.7, "web_rps_organico": 17.36, "web_rps_total": 8.57, "index_labels": ["Jan/25", "Fev/25", "Mar/25", "Abr/25", "Mai/25", "Jun/25", "Jul/25", "Ago/25", "Set/25", "Out/25", "Nov/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26", "Ago/26", "Set/26", "Out/26", "Nov/26", "Dez/26"], "web_index_organico": [100.0, 82.3, 110.7, 110.9, 122.2, 112.4, 115.5, 131.5, 147.2, 138.1, 208.4, 134.7, 140.5, 108.9, 119.9, 111.9, 128.5, 125.9, null, null, null, null, null, null], "web_index_total": [100.0, 99.8, 107.5, 104.4, 112.8, 105.8, 123.6, 139.8, 150.1, 142.5, 221.4, 149.1, 146.0, 117.4, 135.9, 125.7, 144.8, 136.5, null, null, null, null, null, null], "web_impressions_labels": ["Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26", "Jun/26"], "web_impressions_values": [15044865, 15335213, 13188200, 16160486, 14441022, 12919632, 12291991], "app_revenue_current": [2844970.1499589994, 2404758.1401459994, 2575340.720026, 2246916.27984, 2691906.1999550005, 2202771.269998, null, null, null, null, null, null], "app_revenue_previous": [2488252.25003, 2516200.91017, 2505722.0098750005, 2750478.2001240007, 3423724.9997970015, 3261324.240078999, 3429247.529804999, 3386333.7101519997, 4301516.309865001, 4626561.969887, 5431068.129707, 2850706.569851], "farma_impressions_labels": ["Dec/25", "Jan/26", "Feb/26", "Mar/26", "Apr/26", "May/26", "Jun/26"], "farma_impressions_values": [11603197, 12777688, 15095200, 18486308, 12097605, 9475222, 10439543]};
   </script>
   <script>
     (function () {
@@ -1541,13 +1582,30 @@ table {
     return String(Math.round(value));
   }
 
+  // Registro global de instancias ECharts para resize no beforeprint
+  const _chartInstances = {};
+
   function createChart(id, option) {
     const element = document.getElementById(id);
     if (!element || typeof echarts === 'undefined') return;
     const chart = echarts.init(element, null, { renderer: 'svg' });
     chart.setOption(option);
+    _chartInstances[id] = chart;
     window.addEventListener('resize', () => chart.resize());
   }
+
+  // Redimensiona todos os graficos ao entrar em modo de impressao
+  // (Ctrl+P, window.print(), ou qualquer impressora/PDF do SO)
+  const _printMql = window.matchMedia('print');
+  function _resizeAllCharts() {
+    Object.values(_chartInstances).forEach(function(c) {
+      try { c.resize(); } catch(e) {}
+    });
+  }
+  if (_printMql.addEventListener) {
+    _printMql.addEventListener('change', function(e) { if (e.matches) _resizeAllCharts(); });
+  }
+  window.addEventListener('beforeprint', _resizeAllCharts);
 
   const labels12 = charts.labels12 || ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
