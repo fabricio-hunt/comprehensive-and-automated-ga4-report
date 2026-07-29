@@ -578,14 +578,14 @@ table {
 @media print {
   @page {
     size: A4 landscape;
-    margin: 0;
+    margin: 5mm;
   }
   html, body {
     background: #fff !important;
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
-    height: 100% !important;
+    height: auto !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -594,43 +594,55 @@ table {
   }
   .report-shell {
     width: 100% !important;
+    display: block !important;
     margin: 0 !important;
     padding: 0 !important;
   }
   .page {
     width: 100% !important;
-    height: 100vh !important;
-    max-height: 100vh !important;
+    height: 188mm !important;
+    max-height: 188mm !important;
+    min-height: 188mm !important;
     box-sizing: border-box !important;
     padding: 6mm 10mm !important;
-    margin: 0 !important;
+    margin: 0 0 10mm 0 !important;
     background: #fff !important;
     box-shadow: none !important;
     border-radius: 0 !important;
     overflow: hidden !important;
+    page-break-before: always !important;
     page-break-after: always !important;
     page-break-inside: avoid !important;
+    break-before: page !important;
     break-after: page !important;
     break-inside: avoid !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: space-between !important;
+    display: block !important;
+  }
+  .page:first-child {
+    page-break-before: avoid !important;
+    break-before: avoid !important;
+  }
+  .page > * {
+    margin-bottom: 4mm !important;
+  }
+  .page > *:last-child {
+    margin-bottom: 0 !important;
   }
   .chart {
-    height: 62mm !important;
-    max-height: 30vh !important;
+    height: 60mm !important;
+    max-height: 60mm !important;
   }
   .chart.small {
-    height: 42mm !important;
-    max-height: 22vh !important;
+    height: 40mm !important;
+    max-height: 40mm !important;
   }
   .chart.tall {
-    height: 74mm !important;
-    max-height: 38vh !important;
+    height: 72mm !important;
+    max-height: 72mm !important;
   }
   .mini-chart {
-    height: 36mm !important;
-    max-height: 18vh !important;
+    height: 35mm !important;
+    max-height: 35mm !important;
   }
   .metric-card {
     padding: 3mm 4mm !important;
